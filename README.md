@@ -1,2 +1,2 @@
 # intqs
-Interview Questions
+Interview Questions with my solutions!

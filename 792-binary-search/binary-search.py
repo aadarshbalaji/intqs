@@ -9,7 +9,6 @@ class Solution(object):
         x = 0
         while nums2:
             middle = len(nums2)//2
-            print(middle, x, nums2)
             if nums2[middle] == target:
                 return middle + x
             elif nums2[middle] < target:

@@ -1,17 +1,20 @@
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        d = {")": "(", "]": "[", "}": "{"}
-        stack = []
-        for let in s:
-            if let not in d:
-                stack.append(let)
-                continue
-            if not stack or stack[-1] != d[let]:
-                return False
-            stack.pop()
-
-        return not stack
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = deque()
+        op = ['(', '[', '{']
+        cl = [')', ']', '}']
+        for character in s:
+            if character in op:
+                stack.append(character)
+            else:
+                if len(stack) == 0:
+                    return False
+                check = stack.pop()
+                if check == op[cl.index(character)]:
+                    continue
+                else:
+                    return False
+        if len(stack) > 0:
+            return False
+        else:
+            return True

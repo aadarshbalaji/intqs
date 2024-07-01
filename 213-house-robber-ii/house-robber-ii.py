@@ -1,7 +1,6 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         def rob1(smol):
-            print(smol)
             r1,r2 = 0,0
             for num in smol:
                 temp = max(num + r1, r2)

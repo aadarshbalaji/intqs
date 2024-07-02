@@ -12,6 +12,9 @@ class Solution:
                 lrr(tree.left)
             if tree:
                 ordered.append(tree.val)
+                if len(ordered) == k:
+                    tree = None
+                    return
             if tree.right:
                 lrr(tree.right)
         lrr(root)

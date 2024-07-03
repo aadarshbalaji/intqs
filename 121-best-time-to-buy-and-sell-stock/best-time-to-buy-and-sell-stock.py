@@ -1,12 +1,12 @@
-class Solution(object):
-    def maxProfit(self, prices):
-        """
-        :type prices: List[int]
-        :rtype: int
-        """
-        m = 0
-        b = prices[0]
-        for i in range(1, len(prices)):
-            b = min(b, prices[i])
-            m = max(m, prices[i] - b)
-        return m
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        currbuy = prices[0]
+        prof = 0
+        for num in prices[1:]:
+            if currbuy > num:
+                currbuy = num
+            prof = max(prof, num-currbuy)
+        return prof
+
+        
+            

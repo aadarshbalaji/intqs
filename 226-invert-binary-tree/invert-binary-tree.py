@@ -10,17 +10,10 @@ class Solution:
             if tree == None:
                 return
             #print(tree.val)
-            if tree.left and tree.right:
-                currleft = tree.left
-                tree.left = tree.right
-                tree.right = currleft
-            elif tree.left and not tree.right:
-                tree.right = tree.left
-                tree.left = None
-            elif tree.right and not tree.left:
-                tree.left = tree.right
-                tree.right = None
-                
+            currleft = tree.left
+            tree.left = tree.right
+            tree.right = currleft
+
 
             inverthelper(tree.left)
             inverthelper(tree.right)

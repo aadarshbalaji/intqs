@@ -1,15 +1,12 @@
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        startz = cost
-        starto = cost[1:]
+        def dp(n):  
+            if n < 2: 
+                return cost[n] 
+            if n not in memo:
+                memo[n] = cost[n] + min(dp(n-1), dp(n-2))
+            return memo[n]
         memo = {}
-        def mincost(arr):
-            if len(arr) == 0:
-                return 0
-            if len(arr) < 3:
-                return arr[0]
-            if str(arr) not in memo.keys():
-                memo[str(arr)] = arr[0] + min(mincost(arr[1:]), mincost(arr[2:]))
-            return memo[str(arr)]
-        return min(mincost(startz), mincost(starto))
+        length = len(cost) 
+        return min(dp(length-1), dp(length-2))
             

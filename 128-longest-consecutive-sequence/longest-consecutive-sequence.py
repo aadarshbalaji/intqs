@@ -4,10 +4,11 @@ class Solution:
         table = {}
         maxval = 0
         for num in nums:
-            lowercurr = table.get(num-1, 0)
-            uppercurr = table.get(num+1, 0)
-            value = lowercurr + uppercurr + 1
-            table[num-lowercurr] = value
-            table[num+uppercurr] = value
-            maxval = max(maxval, value)
+            x = table.get(num + 1, 0)
+            y = table.get(num - 1, 0)
+            val = x + y + 1
+            table[num] = val
+            table[num - y] = val
+            table[num + x] = val
+            maxval = max(maxval, val)
         return maxval

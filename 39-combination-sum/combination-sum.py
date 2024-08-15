@@ -6,8 +6,7 @@ class Solution:
                 return False
             elif sum(listnum) == target:
                 currlistnum = sorted(listnum)
-                currlistnum2 = sorted(listnum, reverse=True)
-                if currlistnum in globalarr or currlistnum2 in globalarr:
+                if currlistnum in globalarr:
                     return False
                 globalarr.append(sorted(listnum))
                 return True

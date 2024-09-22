@@ -3,7 +3,7 @@ class Solution:
         stack = [['', 0]]
         for c in s:
             if stack[-1][0] == c:
-                stack[-1] = [stack[-1][0], stack[-1][1] + 1]
+                stack[-1][1] += 1
                 if stack[-1][1] == k:
                     stack.pop(-1)
             else:

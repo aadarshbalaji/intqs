@@ -2,8 +2,7 @@ class UndergroundSystem(object):
 
     def __init__(self):
         self.checkin = {}
-        self.line = defaultdict(int)
-        self.counts = defaultdict(int)
+        self.line = defaultdict(lambda: [0,0])
 
     def checkIn(self, id, stationName, t):
         """
@@ -25,8 +24,7 @@ class UndergroundSystem(object):
         """
         loc = self.checkin[id][0]
         time = self.checkin[id][1]
-        self.line[(loc, stationName)] += t-time
-        self.counts[(loc, stationName)] += 1
+        self.line[(loc, stationName)] = [self.line[(loc, stationName)][0] + t-time, self.line[(loc, stationName)][1] + 1]
         self.checkin.pop(id)
        
         
@@ -38,8 +36,7 @@ class UndergroundSystem(object):
         :rtype: float
         """
         tup = (startStation, endStation)
-        time = self.line[tup]
-        count = self.counts[tup]
+        time, count = self.line[tup]
         #print(float(time)/float(count))
         return float(time)/float(count)
         

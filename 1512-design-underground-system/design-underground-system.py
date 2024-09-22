@@ -23,8 +23,8 @@ class UndergroundSystem(object):
         :rtype: None
         """
         loc, time = self.checkin.pop(id)
-        x = self.line[(loc, stationName)]
-        self.line[(loc, stationName)] = [x[0] + t-time, x[1] + 1]
+        total_time, count = self.line[(loc, stationName)]
+        self.line[(loc, stationName)] = [total_time + t-time, count + 1]
        
         
 

@@ -24,7 +24,8 @@ class UndergroundSystem(object):
         """
         loc = self.checkin[id][0]
         time = self.checkin[id][1]
-        self.line[(loc, stationName)] = [self.line[(loc, stationName)][0] + t-time, self.line[(loc, stationName)][1] + 1]
+        x = self.line[(loc, stationName)]
+        self.line[(loc, stationName)] = [x[0] + t-time, x[1] + 1]
         self.checkin.pop(id)
        
         

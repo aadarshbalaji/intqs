@@ -2,7 +2,7 @@ class UndergroundSystem(object):
 
     def __init__(self):
         self.checkin = {}
-        self.line = defaultdict(lambda: [0,0])
+        self.line = (defaultdict(lambda: [0,0]))
 
     def checkIn(self, id, stationName, t):
         """

@@ -22,11 +22,9 @@ class UndergroundSystem(object):
         :type t: int
         :rtype: None
         """
-        loc = self.checkin[id][0]
-        time = self.checkin[id][1]
+        loc, time = self.checkin.pop(id)
         x = self.line[(loc, stationName)]
         self.line[(loc, stationName)] = [x[0] + t-time, x[1] + 1]
-        self.checkin.pop(id)
        
         
 

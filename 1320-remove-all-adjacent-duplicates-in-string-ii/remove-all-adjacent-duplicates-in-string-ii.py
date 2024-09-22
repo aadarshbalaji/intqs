@@ -1,20 +1,15 @@
-class Solution(object):
-    def removeDuplicates(self, s, k):
-        """
-        :type s: str
-        :type k: int
-        :rtype: str
-        """
-        stack = []
-        for i in s:
-            if stack and stack[-1][0] == i:
-                stack[-1][1] += 1
+class Solution:
+    def removeDuplicates(self, s: str, k: int) -> str:
+        stack = [['', 0]]
+        for c in s:
+            if stack[-1][0] == c:
+                stack[-1] = [stack[-1][0], stack[-1][1] + 1]
                 if stack[-1][1] == k:
-                    stack.pop()
+                    stack.pop(-1)
             else:
-                stack.append([i,1])
-        ans = ''
-        for letter, count in stack:
-            ans += letter*count
-        return ans
+                stack.append([c,1])
         
+        ans = ''
+        for s,c in stack:
+            ans += s*c
+        return ans

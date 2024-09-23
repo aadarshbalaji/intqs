@@ -21,11 +21,11 @@ class Solution(object):
             return res
 
 
-        '''count = defaultdict(int)
+        count = defaultdict(int)
         for c in word:
             count[c] += 1
         if count[word[0]] > count[word[-1]]:
-            word = word[::-1]'''
+            word = word[::-1]
 
         for r in range(rows):
             for c in range(cols):

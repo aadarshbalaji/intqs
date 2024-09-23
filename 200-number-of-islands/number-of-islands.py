@@ -4,29 +4,28 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
-        numrows = len(grid)
-        numcols = len(grid[0])
+        lenrows, lencols = len(grid), len(grid[0])
         visited = set()
         islands = 0
-
-        def bfs(row, col):
+        def bfs(r, c):
             q = deque()
-            visited.add((row,col))
+            visited.add((r,c))
             q.append((r,c))
 
             while q:
-                currow, currcol = q.popleft()
-                directions = [[1,0], [-1,0], [0,1], [0,-1]]
+                directions = [[0,1], [1,0], [0,-1], [-1,0]]
                 for dr, dc in directions:
-                    newrow, newcol = currow + dr, currcol + dc
-                    if (newrow, newcol) not in visited and 0 <= newrow < numrows and 0 <= newcol < numcols and grid[newrow][newcol] == '1':
-                        q.append((newrow, newcol))
-                        bfs(newrow, newcol)
+                    nr, nc = r + dr, c + dc
+                    if 0 <= nr < lenrows and 0 <= nc < lencols and (nr, nc) not in visited and grid[nr][nc] == '1':
+                        q.append((nr,nc))
+                        bfs(nr,nc)
+                    visited.add((nr,nc))
+                q.popleft()
 
 
-        for r in range(numrows):
-            for c in range(numcols):
-                if (r,c) not in visited and grid[r][c] == '1':
+        for row in range(lenrows):
+            for col in range(lencols):
+                if (row, col) not in visited and grid[row][col] == '1':
                     islands += 1
-                    bfs(r,c)
+                    bfs(row,col)
         return islands

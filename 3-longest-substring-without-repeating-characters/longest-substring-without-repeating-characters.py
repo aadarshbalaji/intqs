@@ -1,12 +1,17 @@
-class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        maxlen = 0
-        left = 0
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+
+        l = 0
         seen = {}
+        currmax = 0
         for r, c in enumerate(s):
-            if c in seen and seen[c] >= left:
-                left = seen[c] + 1
-            maxlen = max(maxlen, r - left + 1)
+            if c in seen and seen[c] >= l:
+                l = seen[c] + 1
+            currmax = max(currmax, r-l+1)
             seen[c] = r
-        return maxlen
+        return currmax
 

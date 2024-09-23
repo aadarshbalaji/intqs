@@ -1,34 +1,35 @@
-class Solution(object):
-    def invalidTransactions(self, transactions):
-        """
-        :type transactions: List[str]
-        :rtype: List[str]
-        """
+class Solution:
+    def invalidTransactions(self, transactions: List[str]) -> List[str]:
+        timetorest = {}
         ans = []
-        hs = {}
-        for i in range(len(transactions)):
-            action = transactions[i]
-            name, time, amount, city = action.split(',')
+        for t in transactions:
+            actions = t.split(',')
+            name, time, amount, city = actions
             time = int(time)
-            amount = int(amount)
-            if time not in hs:
-                hs[time] = {name:[city]}
-            else:
-                if name not in hs[time]:
-                    hs[time][name] = [city]
+            if time in timetorest:
+                if name in timetorest[time]:
+                    timetorest[time][name].append(city)
                 else:
-                    hs[time][name].append(city)
-        #print(hs)
-        for act in transactions:
-            name, time, amount, city = act.split(',')
+                    timetorest[time][name] = [city]
+            else:
+                timetorest[time] = {name: [city]}
+        
+        for t in transactions:
+            actions = t.split(',')
+            name, time, amount, city = actions
             time = int(time)
             amount = int(amount)
+            #print(name, time, amount, city)
+            
             if amount > 1000:
-                ans.append(act)
+                ans.append(t)
                 continue
+            
             for i in range(time-60, time+61):
-                if i in hs:
-                    if name in hs[i] and ((len(hs[i][name]) > 1 )or (hs[i][name][0] != city)):
-                        ans.append(act)
-                        break
+                if i in timetorest:
+                    if name in timetorest[i]:
+                        if len(timetorest[i][name]) > 1 or timetorest[i][name][0] != city:
+                            ans.append(t)
+                            break
+                            
         return ans

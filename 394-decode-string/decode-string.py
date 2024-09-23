@@ -5,28 +5,24 @@ class Solution(object):
         :rtype: str
         """
         stack = []
-        currstring = ''
+        currstring = ""
         currnum = 0
         for c in s:
             if c.isdigit():
-                currnum = currnum*10 + int(c)
+                currnum = currnum * 10 + int(c)
+
             elif c == '[':
                 stack.append(currnum)
                 stack.append(currstring)
-                currstring = ''
                 currnum = 0
-
+                currstring = ''
             elif c == ']':
-                s = stack.pop()
+                string = stack.pop()
                 num = stack.pop()
-                currstring = s + currstring*num
-                
+                currstring = string + num * currstring
+
             else:
                 currstring += c
         while stack:
-            currstring = currstring + stack.pop()
+            currstring = stack.pop() + currstring
         return currstring
-
-                
-
-        

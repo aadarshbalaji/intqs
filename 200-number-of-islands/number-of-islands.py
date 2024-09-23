@@ -17,7 +17,7 @@ class Solution(object):
                 for dr, dc in directions:
                     nr, nc = r + dr, c + dc
                     if 0 <= nr < lenrows and 0 <= nc < lencols and (nr, nc) not in visited and grid[nr][nc] == '1':
-                        q.append((nr,nc))
+                        #q.append((nr,nc))
                         bfs(nr,nc)
                     visited.add((nr,nc))
                 q.popleft()

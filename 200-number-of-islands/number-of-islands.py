@@ -1,26 +1,32 @@
-class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
-        islands = 0
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        numrows = len(grid)
+        numcols = len(grid[0])
         visited = set()
-        numrows, numcols = len(grid), len(grid[0])
+        islands = 0
 
-        def bfs(crow, ccol):
+        def bfs(row, col):
             q = deque()
-            visited.add((crow, ccol))
-            q.append((crow,ccol))
+            visited.add((row,col))
+            q.append((r,c))
+
             while q:
-                lrow, lcol = q.popleft()
-                directions = [[0,1], [0,-1],[1,0], [-1,0]]
+                currow, currcol = q.popleft()
+                directions = [[1,0], [-1,0], [0,1], [0,-1]]
                 for dr, dc in directions:
-                    nr, nc = lrow + dr, lcol + dc
-                    if 0 <= nr < numrows and 0 <= nc < numcols and grid[nr][nc] == '1' and (nr,nc) not in visited:
-                        q.append((nr,nc))
-                        visited.add((nr,nc))
+                    newrow, newcol = currow + dr, currcol + dc
+                    if (newrow, newcol) not in visited and 0 <= newrow < numrows and 0 <= newcol < numcols and grid[newrow][newcol] == '1':
+                        q.append((newrow, newcol))
+                        bfs(newrow, newcol)
 
 
         for r in range(numrows):
             for c in range(numcols):
-                if grid[r][c] == '1' and (r,c) not in visited:
+                if (r,c) not in visited and grid[r][c] == '1':
                     islands += 1
                     bfs(r,c)
         return islands

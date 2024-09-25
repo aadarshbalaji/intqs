@@ -1,13 +1,12 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
         ans = []
-
-        def backtrack(node, path):
-            path.append(node)
-            if node == len(graph) - 1:
+        def dfs(index, path):
+            path.append(index)
+            if index == len(graph)-1:
                 ans.append(list(path))
-            for n in graph[node]:
-                backtrack(n, path)
+            for n in graph[index]:
+                dfs(n, path)
             path.pop()
-        backtrack(0,[])
+        dfs(0, [])
         return ans

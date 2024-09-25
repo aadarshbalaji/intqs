@@ -10,6 +10,5 @@ class Solution:
             var = dist(arr)
             hs[var].append(arr)
             heappush(d, var)
-        d.sort()
-        return [hs[y].pop(0) for y in d[0:k]]
+        return [hs[heapq.heappop(d)].pop(0) for y in range(k)]
 

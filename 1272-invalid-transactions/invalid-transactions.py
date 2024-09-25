@@ -16,7 +16,7 @@ class Solution:
 
         for act in transactions:
             name, time, amount, city = act.split(',')
-            print(amount)
+            #print(amount)
             time = int(time)
             if int(amount) > 1000:
                 ans.append(act)

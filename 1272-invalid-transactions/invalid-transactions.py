@@ -1,35 +1,30 @@
 class Solution:
     def invalidTransactions(self, transactions: List[str]) -> List[str]:
-        timetorest = {}
+        hs = {}
         ans = []
-        for t in transactions:
-            actions = t.split(',')
-            name, time, amount, city = actions
+        for act in transactions:
+            name, time, amount, city = act.split(',')
             time = int(time)
-            if time in timetorest:
-                if name in timetorest[time]:
-                    timetorest[time][name].append(city)
+            if time in hs:
+                if name in hs[time]:
+                    hs[time][name].append(city)
                 else:
-                    timetorest[time][name] = [city]
+                    hs[time][name] = [city]
             else:
-                timetorest[time] = {name: [city]}
+                hs[time] = {name: [city]}
         
-        for t in transactions:
-            actions = t.split(',')
-            name, time, amount, city = actions
+
+        for act in transactions:
+            name, time, amount, city = act.split(',')
+            print(amount)
             time = int(time)
-            amount = int(amount)
-            #print(name, time, amount, city)
-            
-            if amount > 1000:
-                ans.append(t)
+            if int(amount) > 1000:
+                ans.append(act)
                 continue
-            
             for i in range(time-60, time+61):
-                if i in timetorest:
-                    if name in timetorest[i]:
-                        if len(timetorest[i][name]) > 1 or timetorest[i][name][0] != city:
-                            ans.append(t)
+                if i in hs:
+                    if name in hs[i]:
+                        if len(hs[i][name]) > 1 or hs[i][name][0] != city:
+                            ans.append(act)
                             break
-                            
         return ans

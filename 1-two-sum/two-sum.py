@@ -3,8 +3,6 @@ class Solution:
         hs = {}
         for i, num in enumerate(nums):
             if target-num in hs:
-                return [i, hs[target-num]]
+                return [hs[target-num], i]
             else:
                 hs[num] = i
-
-        

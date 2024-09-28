@@ -1,8 +1,12 @@
-class Solution:
-    def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+class Solution(object):
+    def twoCitySchedCost(self, costs):
+        """
+        :type costs: List[List[int]]
+        :rtype: int
+        """
         costs.sort(key=lambda x: x[0]-x[1])
-        totalcosts = 0
+        ans = 0
         for i in range(len(costs)//2):
-            totalcosts += costs[i][0]
-            totalcosts += costs[len(costs)-1-i][1]
-        return totalcosts
+            ans += costs[i][0]
+            ans += costs[len(costs)-i-1][1]
+        return ans

@@ -1,9 +1,8 @@
 class Solution:
     def invalidTransactions(self, transactions: List[str]) -> List[str]:
         hs = {}
-        ans = []
-        for act in transactions:
-            name, time, amount, city = act.split(',')
+        for action in transactions:
+            name, time, amount, city = action.split(',')
             time = int(time)
             if time in hs:
                 if name in hs[time]:
@@ -13,18 +12,18 @@ class Solution:
             else:
                 hs[time] = {name: [city]}
         
-
-        for act in transactions:
-            name, time, amount, city = act.split(',')
-            #print(amount)
+        ans = []
+        for action in transactions:
+            name, time, amount, city = action.split(',')
             time = int(time)
-            if int(amount) > 1000:
-                ans.append(act)
+            amount = int(amount)
+            if amount > 1000:
+                ans.append(action)
                 continue
-            for i in range(time-60, time+61):
-                if i in hs:
-                    if name in hs[i]:
-                        if len(hs[i][name]) > 1 or hs[i][name][0] != city:
-                            ans.append(act)
+            for t in range(time-60,time+61):
+                if t in hs:
+                    if name in hs[t]:
+                        if hs[t][name][0] != city or len(hs[t][name]) > 1:
+                            ans.append(action)
                             break
         return ans

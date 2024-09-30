@@ -10,16 +10,15 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        ans = []
         if not root:
             return None
+        arr = []
         def weird(node, height):
             if not node:
                 return
-            if len(ans) <= height:
-                ans.append(node.val)
-            weird(node.right, height + 1)
-            weird(node.left, height + 1)
+            if len(arr) <= height:
+                arr.append(node.val)
+            weird(node.right, height+1)
+            weird(node.left, height+1)
         weird(root, 0)
-        return ans
-        
+        return arr

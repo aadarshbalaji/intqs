@@ -13,7 +13,7 @@ class Solution(object):
             r = len(nums) - 1
             while l < r:
                 currsum = nums[i] + nums[r] + nums[l]
-                print(currsum)
+                #print(currsum)
                 if abs(target-currsum) < abs(target-closestsum):
                     closestsum = currsum
                 if target == currsum:

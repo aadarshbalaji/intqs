@@ -14,9 +14,11 @@ class Solution(object):
         :rtype: TreeNode
         """
         while True:
-            if root.val > p.val and root.val > q.val:
+            if p.val < root.val and q.val < root.val:
                 root = root.left
-            elif root.val < p.val and root.val < q.val:
+            elif p.val > root.val and q.val > root.val:
                 root = root.right
             else:
                 return root
+        
+       

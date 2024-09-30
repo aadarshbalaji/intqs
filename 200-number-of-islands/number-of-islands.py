@@ -5,18 +5,12 @@ class Solution:
         islands = 0
         visited = set()
         def search(row, col):
-            q = deque()
-            q.append((row,col))
-            visited.add((row,col))
-            while q:
                 directions = [[0,1],[0,-1],[1,0],[-1,0]]
-                for dr , dc in directions:
+                for dr, dc in directions:
                     nr, nc = row  + dr, col + dc
                     if 0 <= nr < lenrows and 0 <= nc < lencols and (nr, nc) not in visited and grid[nr][nc] == '1':
-                        search(nr, nc)
-                    visited.add((nr,nc))
-                q.popleft()
-
+                        grid[nr][nc] = '0'
+                        search(nr,nc)
 
         for r in range(lenrows):
             for c in range(lencols):

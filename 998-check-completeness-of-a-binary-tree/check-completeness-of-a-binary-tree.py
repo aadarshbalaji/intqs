@@ -13,14 +13,12 @@ class Solution:
         n = False
         while q:
             node = q.pop(0)
-            if node:
-                if n == True:
+            if n:
+                if node:
                     return False
-                else:
-                    q.append(node.left)
-                    q.append(node.right)
-            else:
+            if not node:
                 n = True
+            else:
+                q.append(node.left)
+                q.append(node.right)
         return True
-
-                

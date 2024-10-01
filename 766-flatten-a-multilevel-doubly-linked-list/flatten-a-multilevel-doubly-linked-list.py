@@ -32,10 +32,6 @@ class Solution(object):
                 head = head.next
         while head.child:
             flattenchild = self.flatten(head.child)
-            end = flattenchild
-            while end.next:
-                end = end.next
-            end.next = head.next
             flattenchild.prev = head
             head.next = flattenchild
             head.child = None

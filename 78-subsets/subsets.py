@@ -5,12 +5,12 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         ans = []
-        def create(index, path):
+        def helper(path, index):
             ans.append(list(path))
             for i in range(index, len(nums)):
-                currpath = list(path) + [nums[i]]
-                create(i+1, currpath)
-                currpath.remove(nums[i])
-            
-        create(0,[])
+                currpath = path + [nums[i]]
+                helper(currpath, i + 1)
+                currpath.pop()
+
+        helper([], 0)
         return ans

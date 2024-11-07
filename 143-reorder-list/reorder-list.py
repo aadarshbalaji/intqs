@@ -8,21 +8,24 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        deq = collections.deque()
-        currnode = head.next
-        while currnode:
-            deq.append(currnode)
-            currnode = currnode.next
+        deq = deque()
+        curr = head.next
+        while curr:
+            deq.append(curr)
+            curr = curr.next
         
-        currnode = head
-        while len(deq) >= 2:
-            currnode.next = deq.pop()
-            currnode = currnode.next
-            currnode.next = deq.popleft()
-            currnode = currnode.next
-        if deq:
-            currnode.next = deq.pop()
-            currnode = currnode.next
-        currnode.next = None
+        curr = head
+        while len(deq) > 1:
+            curr.next = deq.pop()
+            curr = curr.next
+            curr.next = deq.popleft()
+            curr = curr.next
+        
+        if len(deq) != 0:
+            curr.next = deq.pop()
+            curr = curr.next
+        curr.next = None
+
+
 
         

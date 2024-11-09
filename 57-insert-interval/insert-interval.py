@@ -5,23 +5,24 @@ class Solution(object):
         :type newInterval: List[int]
         :rtype: List[List[int]]
         """
-        
-        merged = []
+        ans = []
         i = 0
         start, end = newInterval
         while i < len(intervals) and intervals[i][1] < start:
-            merged.append(intervals[i])
+            ans.append(intervals[i])
             i += 1
-        
-        while i < len(intervals) and intervals[i][0] <= end:
-            start = min(start, intervals[i][0])
-            end = max(end, intervals[i][1])
+        if i < len(intervals):
+            print(intervals[i])
+        curr = newInterval
+        while i < len(intervals) and end >= intervals[i][0]:
+            curr[0] = min(intervals[i][0], curr[0])
+            curr[1] = max(intervals[i][1], end)
             i += 1
 
-        merged.append([start, end])
-        
+        ans.append(curr)
+
         while i < len(intervals):
-            merged.append(intervals[i])
+            ans.append(intervals[i])
             i += 1
-            
-        return merged
+        
+        return ans

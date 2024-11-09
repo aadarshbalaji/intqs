@@ -1,13 +1,19 @@
-class Solution:
-    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        intervals.sort(key=lambda x: x[0])
-        ans = []
-        prev = intervals[0]
-        for start, end in intervals:
-            if prev[1] >= start:
-                prev[1] = max(prev[1], end)
+class Solution(object):
+    def merge(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        intervals = sorted(intervals, key=lambda x: x[0])
+        new = []
+        curr = intervals[0]
+        for start, end in intervals[1:]:
+            if start <= curr[1]:
+                curr[1] = max(curr[1], end)
             else:
-                ans.append(prev)
-                prev = [start,end]
-        ans.append(prev)
-        return ans
+                new.append(curr)
+                curr = [start,end]
+        
+        new.append(curr)
+        return new
+        

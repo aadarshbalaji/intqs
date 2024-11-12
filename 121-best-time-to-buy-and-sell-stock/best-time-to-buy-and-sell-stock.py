@@ -1,10 +1,14 @@
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
-        currdiff = 0
-        currmin = prices[0]
-        for num in prices:
-            if num > currmin:
-                currdiff = max(currdiff, num-currmin)
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        rv = 0
+        curr = prices[0]
+        for p in prices[1:]:
+            if p > curr:
+                rv = max(rv, p-curr)
             else:
-                currmin = num
-        return currdiff
+                curr = p
+        return rv

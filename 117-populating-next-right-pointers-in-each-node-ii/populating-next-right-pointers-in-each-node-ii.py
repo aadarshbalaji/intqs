@@ -20,11 +20,10 @@ class Solution(object):
         q.append(root)
         while q:
             size = len(q)
-            n = []
-            for i in range(size):
-                n.append(q.popleft())
+            n = list(q)
             for i in range(0, len(n)-1):
                 n[i].next = n[i+1]
+            q = deque()
             for nnn in n:
                 if nnn.left:
                     q.append(nnn.left)

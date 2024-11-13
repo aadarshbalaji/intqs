@@ -3,5 +3,5 @@ class Solution:
         ans = defaultdict(list)
         for s in strs:
             c = sorted(s)
-            ans[tuple(c)].append(s)
+            ans[str(c)].append(s)
         return [v for v in ans.values()]

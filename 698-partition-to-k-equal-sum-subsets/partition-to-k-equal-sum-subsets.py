@@ -1,42 +1,36 @@
 class Solution:
     def canPartitionKSubsets(self, arr: List[int], k: int) -> bool:
         n = len(arr)
-        total_array_sum = sum(arr)
-        if total_array_sum % k != 0:
-            return False
-        target_sum = total_array_sum // k
+        totalsum = sum(arr)
         arr.sort(reverse=True)
+        if totalsum % k != 0:
+            return False
+        target = totalsum // k
         taken = ['0'] * n
         memo = {}
-        def backtrack(index, count, curr_sum):
-            n = len(arr)
-            
-            taken_str = ''.join(taken)
-    
+
+        def backtrack(index, count, currsum):
             if count == k - 1:
                 return True
-            if curr_sum > target_sum:
+            if currsum > target:
                 return False
-            
-            if taken_str in memo:
-                return memo[taken_str]
-            
-            if curr_sum == target_sum:
-                memo[taken_str] = backtrack(0, count + 1, 0)
-                return memo[taken_str]
+
+            takenstr = "".join(taken)
+            if takenstr in memo:
+                return memo[takenstr]    
+            if currsum == target:
+                memo[takenstr] = backtrack(0, count+1, 0)
+                return memo[takenstr]
             
             for j in range(index, n):
                 if taken[j] == '0':
-                    # Include this element in current subset.
                     taken[j] = '1'
-                    # If using current jth element in this subset leads to make all valid subsets.
-                    if backtrack(j + 1, count, curr_sum + arr[j]):
+                    if backtrack(j+1,count,currsum + arr[j]):
                         return True
-                    # Backtrack step.
                     taken[j] = '0'
-                    
-
-            memo[taken_str] = False
-            return memo[taken_str] 
+            
+            memo[takenstr] = False
+            return memo[takenstr]
         
-        return backtrack(0, 0, 0)
+        return backtrack(0,0,0)
+            

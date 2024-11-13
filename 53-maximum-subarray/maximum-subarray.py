@@ -4,12 +4,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        result = nums[0]
-        total = 0
-        for num in nums:
-            if total < 0:
-                total = 0
-            total += num
-            result = max(result, total)
-        return result
-        
+        res = nums[0]
+        curr = nums[0]
+        for num in nums[1:]:
+            if curr < 0:
+                curr = 0
+            curr += num
+            res = max(curr, res)
+        return max(res, curr)

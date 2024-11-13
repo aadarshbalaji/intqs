@@ -1,21 +1,20 @@
-class Solution(object):
-    def merge(self, nums1, m, nums2, n):
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         """
-        :type nums1: List[int]
-        :type m: int
-        :type nums2: List[int]
-        :type n: int
-        :rtype: None Do not return anything, modify nums1 in-place instead.
+        Do not return anything, modify nums1 in-place instead.
         """
-        topi = m-1
-        right = m + n -1
-        bottomi = len(nums2) - 1
-        while bottomi >= 0:
-            if topi >= 0 and nums1[topi] > nums2[bottomi]:
-                nums1[right] = nums1[topi]
-                topi -=1
+        r = m + n - 1
+        top = m-1
+        bottom = n-1
+
+        while bottom >= 0:
+            if top >= 0 and nums1[top] > nums2[bottom]:
+                nums1[r] =nums1[top]
+                r -= 1
+                top -= 1
             else:
-                nums1[right] = nums2[bottomi]
-                bottomi -= 1
-            right -= 1
+                nums1[r] = nums2[bottom]
+                bottom -= 1
+                r -= 1
+
         

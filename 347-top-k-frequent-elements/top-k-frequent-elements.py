@@ -8,4 +8,12 @@ class Solution(object):
         freq = defaultdict(int)
         for num in nums:
             freq[num] += 1
-        return heapq.nlargest(k, freq.keys(), key=freq.get)
+        heap = []
+        for num, freq in freq.items():
+            heappush(heap, [freq, num])
+            if len(heap) > k:
+                heappop(heap)
+        rv = []
+        for i in range(k):
+            rv.append(heappop(heap)[1])
+        return rv

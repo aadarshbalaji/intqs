@@ -24,11 +24,11 @@ class Solution(object):
                 if not dfs(n):
                     return False 
             # print("dfs: {} visited: {}".format(c, visited))
-            visited.remove(c)
+            #visited.remove(c)
             # print("remove(c): {}".format(visited))
 
             courses[c] = []
-            # print("courses[{}] = {}".format(c, courses[c]))
+
             return True 
 
         # for course in courses.keys():

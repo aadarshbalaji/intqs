@@ -9,15 +9,14 @@ class Solution:
         cooldown = deque()
         for item, f in freq.items():
             heappush(heap, -f)
-
+        
         while heap or cooldown:
-            if heap: 
-                currtasks = -heappop(heap)
-                if currtasks > 1:
-                    cooldown.append((currtasks-1, n + timer + 1))
+            if heap:
+                tasks = -heappop(heap)
+                if tasks > 1:
+                    cooldown.append((tasks-1, n + timer + 1))
             timer += 1
-
             if cooldown and cooldown[0][1] == timer:
-                amount, newtime = cooldown.popleft()
-                heappush(heap, -amount)
+                newnum, exptime = cooldown.popleft()
+                heappush(heap, -newnum)
         return timer

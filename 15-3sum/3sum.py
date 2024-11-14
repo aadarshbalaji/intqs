@@ -1,27 +1,23 @@
-class Solution(object):
-    def threeSum(self, nums):
-        arr = []
-        nums.sort()
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()  # Sort the array to handle duplicates more easily
+        rv = []
         for i in range(len(nums)):
-            if i > 0 and nums[i] == nums[i-1]:
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
             
-            j = i + 1
-            k = len(nums) - 1
-
-            while j < k:
-                total = nums[i] + nums[j] + nums[k]
-
-                if total > 0:
-                    k -= 1
+            l = i + 1
+            r = len(nums) - 1
+            while l < r:
+                total = nums[i] + nums[l] + nums[r]
+                if total == 0:
+                    rv.append([nums[i], nums[l], nums[r]])
+                    l += 1
+                    while nums[l] == nums[l -1] and l < r:
+                        l += 1
                 elif total < 0:
-                    j += 1
+                    l += 1
                 else:
-                    arr.append([nums[i], nums[j], nums[k]])
-                    j += 1
-
-                    while nums[j] == nums[j-1] and j < k:
-                        j += 1
-        
-        return arr
-        
+                    r -= 1
+            
+        return rv

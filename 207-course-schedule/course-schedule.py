@@ -1,31 +1,39 @@
-class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        vtoe = defaultdict(list)
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        courses = defaultdict(list)
         for course, prereq  in prerequisites:
-            vtoe[course].append(prereq)
+            courses[course].append(prereq)
 
-        memo = {}
-        def check(course, relied):
-            if course in memo:
-                return memo[course]
-            if len(vtoe[course]) == 0:
-                memo[course] = True
-                return memo[course]
-            if course in relied:
-                memo[course] = False
-                return memo[course]
-            new = relied + [course]
-            for preq in vtoe[course]:
-                if not check(preq, new):
-                    memo[preq] = False
-                    return False
-            memo[course] = True
-            return True
-                
-
+        visited = set()
+        def dfs(c):
+            # base case: reached course w/ no prereq
+            if courses[c] == []:
+                return True 
             
-
-        for i in range((numCourses)):
-            if not check(i, []):
+            if c in visited:
                 return False
-        return True
+            
+            visited.add(c) # 1, 2, 3
+            # visit neighborssssss
+            for n in courses[c]:
+                if not dfs(n):
+                    return False 
+            # print("dfs: {} visited: {}".format(c, visited))
+            visited.remove(c)
+            # print("remove(c): {}".format(visited))
+
+            courses[c] = []
+            # print("courses[{}] = {}".format(c, courses[c]))
+            return True 
+
+        # for course in courses.keys():
+        for i in range(numCourses):
+            # call dfs on course to find cycle 
+            if not dfs(i):
+                return False
+        return True 

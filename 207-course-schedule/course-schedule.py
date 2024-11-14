@@ -1,24 +1,31 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        adj = [[] for i in range(numCourses)]
-        indegree = [0] * numCourses
-        ans = []
-        for numlist in prerequisites:
-            course = numlist[0]
-            prereq = numlist[1]
-            adj[prereq].append(course)
-            indegree[course] += 1
-        q = deque()
-        for i in range(numCourses):
-            if indegree[i] == 0:
-                q.append(i)
-        while q:
-            t = q.popleft()
-            ans.append(t)
-            for nextcourse in adj[t]:
-                indegree[nextcourse] -= 1
-                if indegree[nextcourse] == 0:
-                    q.append(nextcourse)
-        
-        return len(ans) == numCourses
-        
+        vtoe = defaultdict(list)
+        for course, prereq  in prerequisites:
+            vtoe[course].append(prereq)
+
+        memo = {}
+        def check(course, relied):
+            if course in memo:
+                return memo[course]
+            if len(vtoe[course]) == 0:
+                memo[course] = True
+                return memo[course]
+            if course in relied:
+                memo[course] = False
+                return memo[course]
+            new = relied + [course]
+            for preq in vtoe[course]:
+                if not check(preq, new):
+                    memo[preq] = False
+                    return False
+            memo[course] = True
+            return True
+                
+
+            
+
+        for i in range((numCourses)):
+            if not check(i, []):
+                return False
+        return True

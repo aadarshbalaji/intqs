@@ -7,16 +7,17 @@ class Solution:
         heap = []
         timer = 0
         cooldown = deque()
-        for key, val in freq.items():
-            heappush(heap, -val)
+        for item, f in freq.items():
+            heappush(heap, -f)
 
         while heap or cooldown:
-            if heap:
-                task = -heappop(heap)
-                if task > 1:
-                    cooldown.append((task-1, timer+n+1))
+            if heap: 
+                currtasks = -heappop(heap)
+                if currtasks > 1:
+                    cooldown.append((currtasks-1, n + timer + 1))
             timer += 1
-            while cooldown and cooldown[0][1] == timer:
-                taskcount, nextiter = cooldown.popleft()
-                heappush(heap, -taskcount)
+
+            if cooldown and cooldown[0][1] == timer:
+                amount, newtime = cooldown.popleft()
+                heappush(heap, -amount)
         return timer

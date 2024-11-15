@@ -7,15 +7,17 @@ class Solution(object):
         if not s:
             return ""
         curr = ''
-        def expand(l, r):
-            count = 0
+        def expand(i, j):
+            l = i
+            r = j
+            curr = ''
             while l >= 0 and r < len(s) and s[l] == s[r]:
-                count = r-l+1
-                l -=1
+                curr = max(curr, s[l:r+1], key=len)
+                l -= 1
                 r += 1
-            return s[l+1:r]
+            return curr
         
-        for i in range(len(s)):
-            curr = max(curr, expand(i, i), expand(i, i+1), key=len)
-        return curr
+        return max([max(expand(k,k),expand(k, k+1), key=len) for k in range(len(s))], key=len)
+                
+
 

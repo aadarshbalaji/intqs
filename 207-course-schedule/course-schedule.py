@@ -5,35 +5,34 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
-        courses = defaultdict(list)
-        for course, prereq  in prerequisites:
-            courses[course].append(prereq)
-
+        graph = defaultdict(list)
+        for course, prereq in prerequisites:
+            graph[course].append(prereq)
+        
+        memo = {}
         visited = set()
-        def dfs(c):
-            # base case: reached course w/ no prereq
-            if courses[c] == []:
-                return True 
+        def cantake(course):
+            if not graph[course]:
+                memo[course] = True
+                return True
+            if course in memo:
+                return memo[course]
             
-            if c in visited:
+            if course in visited:
+                memo[course] = False
                 return False
             
-            visited.add(c) # 1, 2, 3
-            # visit neighborssssss
-            for n in courses[c]:
-                if not dfs(n):
-                    return False 
-            # print("dfs: {} visited: {}".format(c, visited))
-            #visited.remove(c)
-            # print("remove(c): {}".format(visited))
-
-            courses[c] = []
-
-            return True 
-
-        # for course in courses.keys():
+            visited.add(course)
+            for n in graph[course]:
+                if not cantake(n):
+                    return False
+            visited.remove(course)
+            memo[course] = True
+            return True
+        
         for i in range(numCourses):
-            # call dfs on course to find cycle 
-            if not dfs(i):
+            if not cantake(i):
                 return False
-        return True 
+        return True
+            
+        

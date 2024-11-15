@@ -7,18 +7,17 @@
 class Solution(object):
     def rightSideView(self, root):
         """
-        :type root: TreeNode
+        :type root: Optional[TreeNode]
         :rtype: List[int]
         """
-        if not root:
-            return None
-        arr = []
+        rv = []
         def weird(node, height):
             if not node:
                 return
-            if len(arr) <= height:
-                arr.append(node.val)
-            weird(node.right, height+1)
-            weird(node.left, height+1)
+            if height >= len(rv):
+                rv.append(node.val)
+            onright = weird(node.right, height + 1)
+            onleft = weird(node.left, height + 1)
+
         weird(root, 0)
-        return arr
+        return rv

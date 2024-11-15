@@ -1,36 +1,31 @@
 class Solution:
     def canPartitionKSubsets(self, arr: List[int], k: int) -> bool:
-        n = len(arr)
-        totalsum = sum(arr)
         arr.sort(reverse=True)
+        totalsum = sum(arr)
         if totalsum % k != 0:
             return False
         target = totalsum // k
-        taken = ['0'] * n
         memo = {}
-
-        def backtrack(index, count, currsum):
+        taken = ['0'] * len(arr)
+        def canmake(index, count, currsum):
             if count == k - 1:
                 return True
+            takenstr = ''.join(taken)
             if currsum > target:
+                memo[takenstr] = False
                 return False
-
-            takenstr = "".join(taken)
             if takenstr in memo:
-                return memo[takenstr]    
-            if currsum == target:
-                memo[takenstr] = backtrack(0, count+1, 0)
                 return memo[takenstr]
-            
-            for j in range(index, n):
+            if currsum == target:
+                memo[takenstr] = canmake(0, count + 1, 0)
+                return memo[takenstr]
+            for j in range(index, len(arr)):
                 if taken[j] == '0':
                     taken[j] = '1'
-                    if backtrack(j+1,count,currsum + arr[j]):
+                    if canmake(j+1, count, currsum+arr[j]):
                         return True
                     taken[j] = '0'
-            
             memo[takenstr] = False
-            return memo[takenstr]
-        
-        return backtrack(0,0,0)
-            
+            return False
+        return canmake(0,0,0)
+

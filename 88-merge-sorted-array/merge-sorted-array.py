@@ -14,12 +14,11 @@ class Solution(object):
         while bottom >= 0:
             if top >= 0 and nums1[top] > nums2[bottom]:
                 nums1[right] = nums1[top]
-                right -= 1
                 top -= 1
             else:
                 nums1[right] = nums2[bottom]
-                right -= 1
                 bottom -= 1
+            right -= 1
         
 
 

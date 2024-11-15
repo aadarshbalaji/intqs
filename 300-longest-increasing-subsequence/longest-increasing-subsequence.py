@@ -4,11 +4,24 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        res = []
+        stack = []
         for num in nums:
-            if not res or num > res[-1]:
-                res.append(num)
+            if not stack or num > stack[-1]:
+                stack.append(num)
             else:
-                index = bisect_left(res, num)
-                res[index] = num
-        return len(res)
+                l = 0
+                r = len(stack) - 1
+                index = None
+                while l <= r:
+                    mid = (l + r) // 2
+                    if stack[mid] == num:
+                        index = mid
+                        break
+                    if stack[mid] < num:
+                        l = mid + 1
+                    if stack[mid] > num:
+                        r = mid - 1
+                if not index:
+                    index = l
+                stack[index] = num
+        return len(stack)

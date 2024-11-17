@@ -5,10 +5,10 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         rv = []
-        curr = []
         def backtrack(index, path):
             if len(path) == len(nums):
                 rv.append(list(path))
+                return
             for num in nums:
                 if num not in path:
                     new = path + [num]

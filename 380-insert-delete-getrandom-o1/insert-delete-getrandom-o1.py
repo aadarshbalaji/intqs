@@ -27,8 +27,8 @@ class RandomizedSet(object):
         temp = self.arr[-1]
         self.arr[index] = temp
         self.hs[temp] = index
-        del self.hs[val]
         self.arr.pop()
+        del self.hs[val]
         return True
 
     def getRandom(self):

@@ -11,8 +11,9 @@ class Solution(object):
                 return
             for num in nums:
                 if num not in path:
-                    new = path + [num]
-                    backtrack(index+1, new)
+                    path.append(num)
+                    backtrack(index+1, path)
+                    path.pop()
         
         backtrack(0, [])
         return rv

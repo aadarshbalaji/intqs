@@ -1,15 +1,23 @@
-class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
         ans = []
-
-        def dfs(o, c, curr):
+        def backtrack(o, c, curr):
             if o == c == n:
-                ans.append(curr)
+                ans.append(str(curr))
                 return
             if o < n:
-                dfs(o+1, c, curr+'(')
+                curr += '('
+                backtrack(o+1, c, curr)
+                curr = curr[:-1]
             if c < o:
-                dfs(o, c+1, curr+')')
-
-        dfs(0,0,"")
+                curr += ')'
+                backtrack(o, c+1, curr)
+                curr = curr[:-1]
+        backtrack(0,0,'')
         return ans
+
+

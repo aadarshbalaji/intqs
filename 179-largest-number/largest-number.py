@@ -1,12 +1,14 @@
-class Solution:
-    def largestNumber(self, nums: List[int]) -> str:
-        #nums.map(key=lambda x: str(x), reverse = True)
-        if max(nums) == 0:
+class Solution(object):
+    def largestNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: str
+        """
+        arr = list(map(str, nums))
+        arr.sort(key = lambda x: x*10, reverse=True)
+        if arr[0] == '0':
             return '0'
-        new = map(lambda x: str(x), nums)
-        new = list(new)
-        new.sort(key=lambda x: x * 10, reverse=True)
-        ans = ''
-        for string in new:
-            ans += string
-        return ans
+        
+        return ''.join(arr)
+
+

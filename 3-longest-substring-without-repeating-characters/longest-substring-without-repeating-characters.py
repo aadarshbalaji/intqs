@@ -2,11 +2,13 @@ class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         seen = {}
         l = 0
+        r = 0
         currmax = 0
-        for index, c in enumerate(s):
-            if c in seen and seen[c] >= l:
-                l = seen[c] + 1
-            currmax = max(currmax, index-l+1)
-            seen[c] = index
+
+        while r < len(s):
+            if s[r] in seen and seen[s[r]] >= l:
+                    l = seen[s[r]] + 1
+            currmax = max(currmax, r-l+1)
+            seen[s[r]] = r
+            r += 1
         return currmax
-                

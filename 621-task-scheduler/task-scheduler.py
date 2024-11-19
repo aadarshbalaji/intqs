@@ -1,22 +1,25 @@
-class Solution:
-    def leastInterval(self, tasks: List[str], n: int) -> int:
-        freq = defaultdict(int)
-        for c in tasks:
-            freq[c] += 1
-        
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        hs = Counter(tasks)
         heap = []
         timer = 0
         cooldown = deque()
-        for item, f in freq.items():
-            heappush(heap, -f)
+        for num, count in hs.items():
+            heappush(heap, -count)
         
         while heap or cooldown:
-            if heap:
-                tasks = -heappop(heap)
-                if tasks > 1:
-                    cooldown.append((tasks-1, n + timer + 1))
-            timer += 1
             if cooldown and cooldown[0][1] == timer:
-                newnum, exptime = cooldown.popleft()
-                heappush(heap, -newnum)
+                negcount, expectedtime = cooldown.popleft()
+                heappush(heap, negcount)
+            timer += 1
+            if heap:
+                negcount = heappop(heap)
+                if negcount < -1:
+                    cooldown.append([negcount+1, timer+n])
+        
         return timer

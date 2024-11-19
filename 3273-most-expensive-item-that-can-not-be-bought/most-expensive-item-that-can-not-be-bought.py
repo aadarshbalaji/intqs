@@ -1,17 +1,16 @@
-class Solution(object):
-    def mostExpensiveItem(self, primeOne, primeTwo):
-        """
-        :type primeOne: int
-        :type primeTwo: int
-        :rtype: int
-        """
-        dp = [False] * (primeOne * primeTwo)
+class Solution:
+    def mostExpensiveItem(self, primeOne: int, primeTwo: int) -> int:
+        n = primeOne * primeTwo
+        dp = [False] * n
         dp[0] = True
-        currmax = 0
-        for i in range(1, primeOne * primeTwo):
-            if (i - primeOne >= 0 and dp[i-primeOne]) or (i - primeTwo >= 0 and dp[i-primeTwo]):
-                dp[i] = True
-            else:
-                currmax = i
-        return currmax
-            
+
+        for i in range(n):
+            if dp[i] == True:
+                if (i + primeOne) < n:
+                    dp[i + primeOne] = True
+                if (i + primeTwo) < n:
+                    dp[i + primeTwo] = True
+        
+        for i in range(n-1, -1, -1):
+            if not dp[i]:
+                return i

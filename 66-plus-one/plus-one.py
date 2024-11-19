@@ -1,10 +1,18 @@
-class Solution:
-    def plusOne(self, digits: List[int]) -> List[int]:
-        rv = []
-        s = ""
-        for num in digits:
-            s += str(num)
-        news = int(s) + 1
-        for digit in str(news):
-            rv.append(int(digit))
-        return rv
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        carry = 1
+        for j in range(len(digits)-1, -1, -1):
+            if digits[j] == 9 and carry:
+                digits[j] = 0 
+                carry = 1
+            else:
+                digits[j] += carry
+                carry = 0
+        
+        if carry and digits[0] == 0:
+            return [1] + digits
+        return digits

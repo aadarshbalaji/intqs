@@ -6,14 +6,12 @@ class Solution(object):
         :rtype: int
         """
         count = 0
-        prefixsum = 0
+        curr = 0
         hs = defaultdict(int)
         hs[0] = 1
-        pre = [0] * (len(nums)+1)
         for i, num in enumerate(nums):
-            prefixsum += num
-            if prefixsum - k in hs:
-                count += hs[prefixsum - k]
-            hs[prefixsum] += 1
+            if curr + num - k in hs:
+                count += hs[curr+num-k]
+            hs[curr+num] += 1
+            curr = curr + num
         return count
-                

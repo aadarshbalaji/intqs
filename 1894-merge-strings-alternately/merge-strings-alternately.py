@@ -1,23 +1,9 @@
-class Solution(object):
-    def mergeAlternately(self, word1, word2):
-        """
-        :type word1: str
-        :type word2: str
-        :rtype: str
-        """
-        ww = True
-        rv = ""
-        t = 0
-        b = 0
-        while t < len(word1) and b < len(word2):
-            if ww:
-                rv += word1[t]
-                t += 1
-            else:
-                rv += word2[b]
-                b += 1
-            ww = not ww
+class Solution:
+    def mergeAlternately(self, word1: str, word2: str) -> str:
+        minword = min(word1, word2, key = len)
+        new = ''
+        for i in range(len(minword)):
+            new = new + word1[i] + word2[i]
         
-        rv += word1[t:]
-        rv += word2[b:]
-        return rv
+        new += max(word1, word2, key=len)[i+1:]
+        return new

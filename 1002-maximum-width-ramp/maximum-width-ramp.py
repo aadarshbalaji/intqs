@@ -6,7 +6,7 @@ class Solution(object):
         """
         call = (list(range(len(nums))))
         call.sort(key = lambda x: nums[x])
-        print(call)
+        #print(call)
         currmin = float('inf')
         maxrange = 0
         for i in range(len(call)):

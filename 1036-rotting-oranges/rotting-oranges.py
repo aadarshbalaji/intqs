@@ -1,33 +1,28 @@
-class Solution(object):
-    def orangesRotting(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
         lenrows = len(grid)
         lencols = len(grid[0])
-        count = 0
         numfresh = 0
+        timer = 0
+        directions = [[0,1],[0,-1], [1,0],[-1,0]]
         q = deque()
-        for r in range(lenrows):
-            for c in range(lencols):
-                if grid[r][c] == 2:
-                    q.append((r,c))
-                if grid[r][c] == 1:
+        for i in range(lenrows):
+            for j in range(lencols):
+                if grid[i][j] == 1:
                     numfresh += 1
-        if numfresh == 0:
+                if grid[i][j] == 2:
+                    q.append((i,j))
+        if not numfresh:
             return 0
         while q:
-            print(q)
-            for i in range(len(q)):
+            lq = len(q)
+            for i in range(lq):
                 row, col = q.popleft()
-                for dr, dc in [[0,1], [0,-1],[-1, 0], [1,0]]:
+                for dr, dc in directions:
                     newrow, newcol = row + dr, col + dc
-                    if not 0 <= newrow < lenrows or not 0 <= newcol < lencols or grid[newrow][newcol] != 1:
-                        continue
-        
-                    q.append((newrow, newcol))
-                    grid[newrow][newcol] = 2
-                    numfresh -= 1
-            count += 1
-        return -1 if numfresh > 0  else count - 1
+                    if 0 <= newrow < lenrows and 0 <= newcol < lencols and grid[newrow][newcol] == 1:
+                        numfresh -= 1
+                        grid[newrow][newcol] = 2
+                        q.append((newrow, newcol))
+            timer += 1
+        return -1 if numfresh else timer-1

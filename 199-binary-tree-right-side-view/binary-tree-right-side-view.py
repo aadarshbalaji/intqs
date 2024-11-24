@@ -1,23 +1,18 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
-    def rightSideView(self, root):
-        """
-        :type root: Optional[TreeNode]
-        :rtype: List[int]
-        """
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         rv = []
-        def weird(node, height):
+        def helper(node, height):
             if not node:
                 return
-            if height >= len(rv):
+            if len(rv) == height:
                 rv.append(node.val)
-            onright = weird(node.right, height + 1)
-            onleft = weird(node.left, height + 1)
-
-        weird(root, 0)
+            helper(node.right, height+1)
+            helper(node.left, height+1)
+        helper(root, 0)
         return rv

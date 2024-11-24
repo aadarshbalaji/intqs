@@ -6,20 +6,20 @@
 #         self.right = right
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
-            
-            def helper(lower, upper):
-                nonlocal index
-                if index == len(preorder):
-                    return None
-                val = preorder[index]
-                if val < lower or val > upper:
-                    return None
-                index += 1
-                node = TreeNode(val)
-                node.left = helper(lower, val)
-                node.right = helper(val, upper)
-                return node
-            index = 0
-            return helper(-float('inf'), float('inf'))
-            
+        def helper(lower=-float('inf'), upper=float('inf')):
+            nonlocal index
+            if index == len(preorder):
+                return None
+            val = preorder[index]
+            if val < lower or val > upper:
+                return None
+            node = TreeNode(val)
+            index += 1
+            node.left = helper(lower, val)
+            node.right = helper(val, upper)
+            return node
+        index = 0
+        return helper()
+
+        
             

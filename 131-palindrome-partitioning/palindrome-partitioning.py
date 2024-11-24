@@ -1,19 +1,16 @@
-class Solution(object):
-    def partition(self, s):
-        """
-        :type s: str
-        :rtype: List[List[str]]
-        """
-        res = []
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        
+        rv = []
         n = len(s)
-        def explore(index, curr):
-            if index >= n:
-                res.append(list(curr))
+        def explore(index, path):
+            if index == n:
+                rv.append(list(path))
             for i in range(index, n):
-                sub = s[index: i + 1]
+                sub = s[index:i+1]
                 if sub == sub[::-1]:
-                    curr.append(sub)
-                    explore(i + 1, curr)
-                    curr.pop()
+                    path.append(sub)
+                    explore(i+1, path)
+                    path.pop()
         explore(0, [])
-        return res
+        return rv

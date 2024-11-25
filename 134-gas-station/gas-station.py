@@ -1,19 +1,13 @@
-class Solution(object):
-    def canCompleteCircuit(self, gas, cost):
-        """
-        :type gas: List[int]
-        :type cost: List[int]
-        :rtype: int
-        """
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        curr = 0
         if sum(gas) < sum(cost):
             return -1
-        currgas = 0
-        start = 0
-        i = 0
-        while i < len(gas) - 1:
-            currgas += gas[i] - cost[i]
-            if currgas < 0:
-                currgas = 0
-                start = i + 1
-            i += 1
-        return start
+        starting = 0
+        for i in range(len(gas)):
+            curr += gas[i] - cost[i]
+            if curr < 0:
+                curr = 0
+                starting = i+1
+        return starting
+            

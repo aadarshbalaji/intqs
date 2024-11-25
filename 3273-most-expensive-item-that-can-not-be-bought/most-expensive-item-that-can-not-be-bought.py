@@ -1,16 +1,16 @@
 class Solution:
     def mostExpensiveItem(self, primeOne: int, primeTwo: int) -> int:
-        n = primeOne * primeTwo
-        dp = [False] * n
-        dp[0] = True
-
-        for i in range(n):
-            if dp[i] == True:
-                if (i + primeOne) < n:
-                    dp[i + primeOne] = True
-                if (i + primeTwo) < n:
-                    dp[i + primeTwo] = True
+        dp = [0] * (primeOne * primeTwo)
+        dp[primeOne] = 1
+        dp[primeTwo] = 1
+        for i in range(len(dp)):
+            if i + primeOne < len(dp) and dp[i]:
+                dp[i+primeOne] = 1
+            if i + primeTwo < len(dp) and dp[i]:
+                dp[i+primeTwo] = 1
         
-        for i in range(n-1, -1, -1):
+        for i in range(len(dp)-1,-1,-1):
             if not dp[i]:
                 return i
+            
+        

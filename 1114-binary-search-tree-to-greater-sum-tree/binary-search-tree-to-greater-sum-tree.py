@@ -6,14 +6,15 @@
 #         self.right = right
 class Solution:
     def bstToGst(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        #right, node, left
         runningsum = 0
-        def dfs(node):
+        def search(node):
             if not node:
-                return 0
+                return
             nonlocal runningsum
-            dfs(node.right)
+            search(node.right)
             runningsum += node.val
             node.val = runningsum
-            dfs(node.left)
-        dfs(root)
+            search(node.left)
+        search(root)
         return root

@@ -1,23 +1,13 @@
-class Solution(object):
-    def generateParenthesis(self, n):
-        """
-        :type n: int
-        :rtype: List[str]
-        """
-        ans = []
-        def backtrack(o, c, curr):
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        
+        rv = []
+        def helper(o, c, curr):
             if o == c == n:
-                ans.append(str(curr))
-                return
+                rv.append(str(curr))
             if o < n:
-                curr += '('
-                backtrack(o+1, c, curr)
-                curr = curr[:-1]
-            if c < o:
-                curr += ')'
-                backtrack(o, c+1, curr)
-                curr = curr[:-1]
-        backtrack(0,0,'')
-        return ans
-
-
+                helper(o+1, c, curr + '(')
+            if c < o <= n:
+                helper(o, c + 1, curr + ')')
+        helper(0,0,'')
+        return rv

@@ -1,11 +1,16 @@
-class Solution:
-    def maxProduct(self, nums: List[int]) -> int:
-        rv = nums[0]
-        currmin = 1
-        currmax = 1
-        for num in nums:
-            temp = num * currmax
-            currmax = max(num, num*currmin, num*currmax)
-            currmin = min(num, currmin*num, temp)
-            rv = max(rv, currmax)
-        return rv
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        maxsofar = nums[0]
+        minsofar = nums[0]
+        res = maxsofar
+        for num in nums[1:]:
+            temp = max(minsofar*num, num, maxsofar*num)
+            minsofar = min(minsofar*num, num, maxsofar*num)
+            maxsofar = temp
+            res = max(res, maxsofar)
+        return res

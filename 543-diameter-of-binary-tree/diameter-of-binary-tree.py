@@ -1,28 +1,25 @@
-class Solution:
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
     def diameterOfBinaryTree(self, root):
         """
         :type root: Optional[TreeNode]
         :rtype: int
         """
-        # Initialize the global variable here
-        global currmax
-        currmax = 0  # Set initial value for maximum diameter
-        
-        def depth(node):
+        self.currmax = -float('inf')
+        def max_height(node):
             if not node:
                 return 0
-            leftd = depth(node.left)
-            rightd = depth(node.right)
-            
-            # Update the global max diameter
-            global currmax
-            currmax = max(currmax, leftd + rightd)
-            
-            # Return the depth of this node
-            return 1 + max(leftd, rightd)
+            l = max_height(node.left)
+            r = max_height(node.right)
+
+            self.currmax = max(self.currmax, l+r)
+            return 1 + max(l,r)
         
-        # Call the depth function
-        depth(root)
+        max_height(root)
+        return self.currmax
         
-        # Return the maximum diameter found
-        return currmax

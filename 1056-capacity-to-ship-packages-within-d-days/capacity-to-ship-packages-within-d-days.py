@@ -5,7 +5,7 @@ class Solution(object):
         :type days: int
         :rtype: int
         """
-        l = min(weights)
+        l = max(weights)
         r = sum(weights)
 
         def canship(capacity):

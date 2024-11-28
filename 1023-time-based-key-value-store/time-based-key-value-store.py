@@ -36,8 +36,8 @@ class TimeMap(object):
             if arr[mid] > timestamp:
                 r = mid - 1
             else:
-                fin = mid
                 l = mid + 1
+                fin = mid
         return self.word_to_time_to_val[key][arr[fin]]
 
 

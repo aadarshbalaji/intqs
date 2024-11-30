@@ -1,16 +1,21 @@
-class Solution:
-    def trap(self, height: List[int]) -> int:
-        n = len(height)
-        pre = [0] * n
-        suff = [0] * n
-        outcome = 0
-        for i in range(1, n):
-            pre[i] = max(pre[i-1], height[i-1])
-        for i in range(n-2, -1, -1):
-            suff[i] = max(suff[i+1], height[i+1])
-        
-        for i, h in enumerate(height):
-            curr = min(pre[i], suff[i]) - h
-            if curr >= 0:
-                outcome += curr
-        return outcome
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        l = 0
+        r = len(height) - 1
+        maxL = height[0]
+        maxR = height[-1]
+        total = 0
+        while l < r:
+            if maxL <= maxR:
+                l += 1
+                maxL = max(maxL, height[l])
+                total += maxL - height[l]
+            else:
+                r -= 1
+                maxR = max(maxR, height[r])
+                total += maxR - height[r]
+        return total

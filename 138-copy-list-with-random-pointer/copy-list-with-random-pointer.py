@@ -1,40 +1,34 @@
 """
 # Definition for a Node.
 class Node:
-    def __init__(self, x, next=None, random=None):
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
         self.val = int(x)
         self.next = next
         self.random = random
 """
 
-class Solution(object):
-    def copyRandomList(self, head):
-        """
-        :type head: Node
-        :rtype: Node
-        """
-        realtofake = {}
-        nodetorandom = {}
-        dummy = Node(-1)
-        i = 0
-        prev = dummy
-        while head:
-            newnode = Node(head.val)
-            prev.next = newnode
-            nodetorandom[newnode] = head.random
-            realtofake[head] = newnode
-            prev = newnode
-            head = head.next
-            i += 1
-        prev.next = None
-        curr = dummy.next
-        while curr:
-            og = nodetorandom[curr]
-            if og is None:
-                curr.random = prev.next
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        deep = Node(-10000)
+        start = deep
+        rv = deep
+        mapoldtonew = {}
+        copy = head
+        while copy:
+            node = Node(copy.val)
+            mapoldtonew[copy] = node
+            deep.next = node
+            deep = deep.next
+            if copy.random:
+                node.random = copy.random
             else:
-                curr.random = realtofake[og]
-            curr = curr.next
-        return dummy.next
-                
-        
+                node.random = None
+            copy = copy.next
+        while start:
+            if start.random:
+                start.random = mapoldtonew[start.random]
+            else:
+                start.random = None
+            start = start.next
+
+        return rv.next

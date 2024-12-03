@@ -20,7 +20,7 @@ class Solution(object):
                 if total == m:
                     return True
             return False
-        print(canmake(5))
+        #print(canmake(5))
         l = 0
         r = max(bloomDay)
         ans = -1

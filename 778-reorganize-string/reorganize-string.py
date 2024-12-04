@@ -1,18 +1,34 @@
-class Solution:
-    def reorganizeString(self, s: str) -> str:
-        if len(s) == 0:
-            return ''
-        freq = Counter(s)
-        heap = []
-        for letter, count in freq.items():
-            heappush(heap, [-count, letter])
 
-        holdoff = None
-        rv = ''
-        while heap:
-            putcount, putletter = heappop(heap)
-            if holdoff and holdoff[0] < -1:
-                heappush(heap, [holdoff[0] + 1, holdoff[1]])
-            rv += putletter
-            holdoff = [putcount, putletter]
-        return rv if len(rv) == len(s) else ''
+class Solution(object):
+    def reorganizeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        c = Counter(s)
+        maxheap = [[-cnt, char] for char, cnt in c.items()]
+        heapify(maxheap)
+        curr = ""
+        while maxheap:
+            if len(curr) == len(s):
+                return curr
+            negcount, letter = heappop(maxheap)
+            if curr and letter == curr[-1]:
+                if not maxheap:
+                    return ''
+                newnegcount, newletter = heappop(maxheap)
+                curr += newletter
+                if newnegcount < -1:
+                    heappush(maxheap, [newnegcount +1, newletter])
+            else:
+                curr += letter
+                negcount += 1
+            if negcount <= -1:
+                heappush(maxheap, [negcount, letter])
+        
+        return curr if len(curr) == len(s) else ''
+
+        
+
+
+

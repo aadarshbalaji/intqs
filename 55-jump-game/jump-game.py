@@ -5,8 +5,12 @@ class Solution(object):
         :rtype: bool
         """
 
-        lastseen = len(nums) - 1
-        for i in range(len(nums)-2, -1,-1):
-            if i + nums[i] >= lastseen:
-                lastseen = i
-        return lastseen == 0
+        curreach = len(nums) - 1
+        for i in range(len(nums)-2, -1, -1):
+            if i + nums[i] >= curreach:
+                curreach = i
+        return curreach == 0
+
+
+        
+

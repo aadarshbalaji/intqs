@@ -1,14 +1,13 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        n = len(nums)
-        count = 0
-        minreach, maxreach = 0,0
-        
-        while maxreach < n - 1:
-            currfar = 0
-            for i in range(minreach, maxreach + 1):
-                currfar = max(currfar, i + nums[i])
-            count += 1
-            minreach = maxreach + 1
-            maxreach = currfar
-        return count
+        near = 0
+        far = 0
+        steps = 0
+        while far < len(nums) - 1:
+            curr = 0
+            for i in range(near, far+1):
+                curr = max(curr, i + nums[i])
+            near = far + 1
+            far = curr
+            steps += 1
+        return steps            

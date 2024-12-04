@@ -8,12 +8,11 @@ class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         curr = []
         def search(node):
-            if not node:
+            if not node or len(curr) >= k:
                 return
             search(node.left)
             curr.append(node.val)
-            if len(curr) == k:
-                return curr[-1]
             search(node.right)
         search(root)
         return curr[k-1]
+            

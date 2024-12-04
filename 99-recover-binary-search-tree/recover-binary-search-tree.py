@@ -31,8 +31,8 @@ class Solution:
         #print(first_swap.val, second_swap.val)
         if not first_swap or not second_swap:
             return
-        print('ehalsdfa')
-        print(first_swap.val, second_swap.val)
+        #print('ehalsdfa')
+        #print(first_swap.val, second_swap.val)
         first_swap.val, second_swap.val = second_swap.val, first_swap.val
         
 

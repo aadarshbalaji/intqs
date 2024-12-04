@@ -2,69 +2,60 @@ class Node:
     def __init__(self, key=None, value=None):
         self.key = key
         self.val = value
-        self.prev = None
         self.next = None
+        self.prev = None
 
-class LRUCache(object):
 
-    def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
-        self.keytoNode = {}
-        self.head = Node()
-        self.tail = Node()
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        self.length = 0
-        self.capacity = capacity
-    
-    def addtotail(self, key, val):
-        node = Node(key, val)
-        node.prev = self.tail.prev
-        self.tail.prev.next = node
-        node.next = self.tail
-        self.tail.prev = node
-        self.keytoNode[key] = node
-        self.length += 1
-    
-    def delete(self, k):
-        node = self.keytoNode[k]
-        del self.keytoNode[k]
-        node.prev.next=node.next
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.keytonode = {}
+        self.first = Node()  # Dummy head
+        self.last = Node()   # Dummy tail
+        self.first.next = self.last
+        self.last.prev = self.first
+        self.size = 0
+        self.cap = capacity
+
+    def delete(self, key):
+        node = self.keytonode[key]
+        node.prev.next = node.next
         node.next.prev = node.prev
-        self.length -= 1
+        del self.keytonode[key]
 
-    def get(self, key):
-        """
-        :type key: int
-        :rtype: int
-        """
-        if key not in self.keytoNode:
+    def deletefirst(self):
+        node = self.first.next  # The least recently used node
+        self.delete(node.key)
+
+    def addtoend(self, node):
+        temp = self.last.prev
+        temp.next = node
+        node.prev = temp
+        node.next = self.last
+        self.last.prev = node
+
+    def get(self, key: int) -> int:
+        if key not in self.keytonode:
             return -1
-        node = self.keytoNode[key]
-        rv = node.val
+        node = self.keytonode[key]
         self.delete(key)
-        self.addtotail(key, rv)
-        return rv
+        self.addtoend(node)
+        self.keytonode[key] = node  # Re-insert in case it was removed during delete
+        return node.val
 
-    def put(self, key, value):
-        """
-        :type key: int
-        :type value: int
-        :rtype: None
-        """
-        if key in self.keytoNode:
+    def put(self, key: int, value: int) -> None:
+        if key in self.keytonode:
+            # Update existing node
             self.delete(key)
-            self.addtotail(key, value)
-            return
-        if self.length == self.capacity:
-            sample = self.head.next.key
-            self.delete(sample)
-        self.addtotail(key,value)
+            self.size -= 1  # Adjust size as we'll re-add it below
+        
+        elif self.size >= self.cap:
+            # Delete the least recently used node
+            self.deletefirst()
+            self.size -= 1
 
-
-# Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+        # Add the new node
+        node = Node(key, value)
+        self.addtoend(node)
+        self.keytonode[key] = node
+        self.size += 1

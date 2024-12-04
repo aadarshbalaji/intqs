@@ -27,6 +27,6 @@ class Solution(object):
                 return False
             visited.add(course)
             result = [cantake(clas) for clas in graph[course]]
-            memo[course] = result
+            memo[course] = all(result)
             return all(result)
         return all([cantake(i) for i in range(numCourses)])

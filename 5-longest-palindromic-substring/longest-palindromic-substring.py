@@ -11,7 +11,7 @@ class Solution:
                 j += 1
             return currstring
         
-        print(explore(2,2))
+        #print(explore(2,2))
         currmax = ''
         for i in range(len(s)):
             currmax = max(currmax, explore(i,i), explore(i,i+1), key=len)

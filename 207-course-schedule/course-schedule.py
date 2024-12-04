@@ -1,3 +1,5 @@
+import collections
+
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
         """
@@ -5,34 +7,26 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
+        """
+        cycle detection with kahn's algorithm
+        """
         graph = defaultdict(list)
-        for course, prereq in prerequisites:
-            graph[course].append(prereq)
-        
-        memo = {}
+        for course, pre in prerequisites:
+            graph[course].append(pre)
+
         visited = set()
+        memo = {}
         def cantake(course):
             if not graph[course]:
                 memo[course] = True
                 return True
             if course in memo:
                 return memo[course]
-            
             if course in visited:
                 memo[course] = False
                 return False
-            
             visited.add(course)
-            for n in graph[course]:
-                if not cantake(n):
-                    return False
-            visited.remove(course)
-            memo[course] = True
-            return True
-        
-        for i in range(numCourses):
-            if not cantake(i):
-                return False
-        return True
-            
-        
+            result = [cantake(clas) for clas in graph[course]]
+            memo[course] = result
+            return all(result)
+        return all([cantake(i) for i in range(numCourses)])

@@ -1,16 +1,17 @@
-class Solution(object):
-    def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        ans = []
-        def helper(path, index):
-            ans.append(list(path))
-            for i in range(index, len(nums)):
-                currpath = path + [nums[i]]
-                helper(currpath, i + 1)
-                currpath.pop()
-
-        helper([], 0)
-        return ans
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        
+        rv = []
+        visited = set()
+        def dfs(index, path):
+            if (index, str(path)) in visited:
+                return 
+            if index >= len(nums):
+                rv.append(list(path))
+                return
+            visited.add((index, str(path)))
+            dfs(index + 1, path + [nums[index]])
+            dfs(index+1, path)
+        dfs(0, [])
+        return rv
+            

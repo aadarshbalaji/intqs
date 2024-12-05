@@ -6,22 +6,19 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
-
-        all_letters = list('abcdefghijklmnopqrstuvwxyz')
-        q = deque()
         new = set(wordList)
+        q = deque([beginWord])
         count = 0
-        q.append(beginWord)
-
+        letters = list('abcdefghijklmnopqrstuvwxyz')
         def connected(word):
             rv = []
             for i in range(len(word)):
-                for letter in all_letters:
+                for letter in letters:
                     rv.append(word[0:i] + letter + word[i+1:])
             return rv
         while q:
-            size = len(q)
             count += 1
+            size = len(q)
             for i in range(size):
                 currword = q.popleft()
                 if currword == endWord:

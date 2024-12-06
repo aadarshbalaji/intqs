@@ -1,14 +1,16 @@
-class Solution:
-    def longestConsecutive(self, nums: List[int]) -> int:
-        num_set = set(nums)
-        count = 0
-
-        for num in num_set:
-            if num-1 not in num_set:
-                starting = num
-                curr = 1
-                while starting+1 in num_set:
-                    curr += 1
-                    starting += 1
-                count = max(count, curr)
-        return count
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        hs = set(nums)
+        maxlen = 0
+        for num in nums:
+            if num - 1 in hs:
+                continue
+            start = num
+            while num in hs:
+                num += 1
+            maxlen = max(maxlen, num - start )
+        return maxlen

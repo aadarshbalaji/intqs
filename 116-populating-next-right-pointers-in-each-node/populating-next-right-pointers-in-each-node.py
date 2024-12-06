@@ -15,22 +15,20 @@ class Solution(object):
         :rtype: Node
         """
         if not root:
-            return None
-        
-        q = deque([root])
+            return root
+        q = deque()
+        q.append(root)
         while q:
-            prev = None
-            d = len(q)
-            for i in range(d):
+            curr =[]
+            for i in range(len(q)):
                 node = q.popleft()
-                if prev:
-                    prev.next = node
-                
-                prev = node
+                curr.append(node)
                 if node.left:
                     q.append(node.left)
+                if node.right:
                     q.append(node.right)
-        
+            curr.append(None)
+            for i in range(len(curr)-1):
+                curr[i].next = curr[i+1]
         return root
-
-        
+                

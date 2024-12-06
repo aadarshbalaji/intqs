@@ -13,24 +13,23 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        rv = []
         def create_parents(parent, node):
             if not node:
                 return
             node.parent = parent
-            create_parents(node, node.right)
             create_parents(node, node.left)
+            create_parents(node, node.right)
         create_parents(None, root)
-        
+        rv = []
         visited = set()
-        def search(node, height):
-            if not node or node in visited:
+        def traverse(node, dist):
+            if not node or dist > k or node in visited:
                 return
-            if height == k:
+            if dist == k:
                 rv.append(node.val)
             visited.add(node)
-            search(node.parent, height+1)
-            search(node.left, height+1)
-            search(node.right, height+1)
-        search(target, 0)
+            traverse(node.parent, dist+1)
+            traverse(node.left, dist+1)
+            traverse(node.right, dist+1)
+        traverse(target, 0)
         return rv

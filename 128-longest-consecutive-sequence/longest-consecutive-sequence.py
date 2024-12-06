@@ -7,10 +7,9 @@ class Solution(object):
         hs = set(nums)
         maxlen = 0
         for num in nums:
-            if num - 1 in hs:
-                continue
-            start = num
-            while num in hs:
-                num += 1
-            maxlen = max(maxlen, num - start )
+            if num - 1 not in hs:
+                start = num
+                while num in hs:
+                    num += 1
+                maxlen = max(maxlen, num - start)
         return maxlen

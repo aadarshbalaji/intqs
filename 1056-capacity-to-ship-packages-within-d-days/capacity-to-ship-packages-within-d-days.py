@@ -5,28 +5,29 @@ class Solution(object):
         :type days: int
         :rtype: int
         """
-        l = max(weights)
-        r = sum(weights)
-
-        def canship(capacity):
-            curr = 0
-            i = 0 
-            d = days
-            while i < len(weights):
-                if d < 0:
+        def canship(day):
+            count = 1
+            curr = day
+            for w in weights:
+                if w > day:
                     return False
-                if curr + weights[i] <= capacity:
-                    curr += weights[i]
-                    i += 1
-                elif weights[i] > capacity or curr + weights[i] > capacity:
-                    curr = 0
-                    d -= 1
-            d -= 1
-            return d >= 0
-        while l < r:
-            mid = (l+r)//2
+                if curr < w:
+                    count += 1
+                    curr = day
+                curr -= w
+            return count <= days
+        
+
+        print(canship(5))
+        l = 1
+        r = sum(weights)
+        val = r
+        while l <= r:
+            mid = (l+r) // 2
             if canship(mid):
-                r = mid
+               val = mid
+               r = mid - 1
             else:
                 l = mid + 1
-        return l
+        return val 
+        

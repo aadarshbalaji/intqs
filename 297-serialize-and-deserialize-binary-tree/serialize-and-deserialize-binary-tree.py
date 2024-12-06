@@ -12,8 +12,7 @@ class Codec:
         
         :type root: TreeNode
         :rtype: str
-        """
-        
+        """ 
         def helper(node, string):
             if not node:
                 string += 'None,'
@@ -24,22 +23,25 @@ class Codec:
             return string
         return helper(root, '')
 
+        
+
     def deserialize(self, data):
         """Decodes your encoded data to tree.
         
         :type data: str
         :rtype: TreeNode
         """
+        print(data)
         def helper(arr):
             if arr[0] == 'None':
                 arr.pop(0)
                 return None
-            node = TreeNode(arr[0])
-            arr.pop(0)
+            val = (arr.pop(0))
+            node = TreeNode(val)
             node.left = helper(arr)
             node.right = helper(arr)
             return node
-        return helper(data.split(','))
+        return helper(data.split(','))        
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()

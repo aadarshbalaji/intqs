@@ -6,10 +6,11 @@ class Solution:
             if prev != num:
                 countdiffs += 1
             prev = num
-        wow = 0
+        return countdiffs
+        '''wow = 0
         prev = nums[0]
         for x in nums[1:]:
             if prev != x:
                 wow += 1
             prev = x
-        return min(countdiffs, wow)
+        return min(countdiffs, wow)'''

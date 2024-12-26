@@ -3,9 +3,10 @@ class Solution:
         l = 0
         currmax = 0
         seen = {}
-        for r, letter in enumerate(s):
-            if letter in seen and seen[letter] >= l:
-                l = seen[letter] + 1
+        for r in range(len(s)):
+            if s[r] in seen:
+                if seen[s[r]] >= l:
+                    l = seen[s[r]] + 1
             currmax = max(currmax, r-l+1)
-            seen[letter] = r
+            seen[s[r]] = r
         return currmax

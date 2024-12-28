@@ -16,5 +16,5 @@ class Solution(object):
                 pres[prefix_sum]  += 1
             else:
                 pres[prefix_sum]  = 1
-        print(pres)
+        #print(pres)
         return count

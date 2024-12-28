@@ -1,11 +1,20 @@
-class Solution:
-    def subarraySum(self, nums: List[int], k: int) -> int:
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        pres = {0:1}
         prefix_sum = 0
-        hs = defaultdict(int)
-        hs[0] = 1
-        count = 0
+        count = 0 
         for num in nums:
             prefix_sum += num
-            count += hs[prefix_sum - k]
-            hs[prefix_sum] += 1
+            if prefix_sum -k in pres:
+                count += pres[prefix_sum-k]
+            if prefix_sum in pres:
+                pres[prefix_sum]  += 1
+            else:
+                pres[prefix_sum]  = 1
+        print(pres)
         return count

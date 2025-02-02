@@ -5,13 +5,13 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        rv = []
-        s = set()
         h = []
         c = Counter(nums)
-        for num, occurences in c.items():
-            heappush(h, [-occurences, num])
+        for value, freq in c.items():
+            heappush(h, [-freq, value])
+        rv = []
         for i in range(k):
             if h:
                 rv.append(heappop(h)[1])
         return rv
+        

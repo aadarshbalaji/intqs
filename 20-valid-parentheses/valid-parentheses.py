@@ -1,20 +1,11 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        o = ['(', '{' , '[']
-        c = [')', '}', ']']
-        mapping = {y:x for x,y in zip(o,c)}
-    
-        q = deque()
+        hs = {')': '(', ']': '[', '}': '{'}
+        stack = []
         for c in s:
-            if c in o:
-                q.append(c)
-            elif c in c:
-                if len(q) == 0:
-                    return False
-                if mapping[c] != q.pop():
-                    return False
-        if len(q) == 0:
-            return True
-        else:
-            return False
+            if c not in hs:
+                stack.append(c)
+            elif not stack or hs[c] != stack.pop():
+                return False
+        return len(stack) == 0
             

@@ -14,17 +14,20 @@ class Solution(object):
         def cantake(num):
             if num in memo:
                 return memo[num]
+            if num in seen:
+                memo[num] = False
+                return False
             if len(graph[num]) == 0:
                 memo[num] = True
                 return True
-            if num in seen:
-                return False
             seen.add(num)
-            b = True
             for pre in graph[num]:
-                b = b and cantake(pre)
-            memo[num] = b
-            return b 
+                if not cantake(pre):
+                    memo[num] = False
+                    return False
+            memo[num] = True
+            return True
+        
         for i in range(numCourses):
             if not cantake(i):
                 return False

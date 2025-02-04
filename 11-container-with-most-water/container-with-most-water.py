@@ -6,11 +6,11 @@ class Solution(object):
         """
         l = 0
         r = len(height) - 1
-        currmax = (r-l) * min(height[l], height[r])
+        maxarea = (r-l) * min(height[l], height[r])
         while l <= r:
-            currmax = max(currmax, (r-l) * min(height[l], height[r]))
+            maxarea = max(maxarea, (r-l) * min(height[l], height[r]))
             if height[l] < height[r]:
                 l += 1
             else:
                 r -= 1
-        return currmax
+        return maxarea

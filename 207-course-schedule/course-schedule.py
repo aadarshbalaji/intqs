@@ -8,7 +8,7 @@ class Solution(object):
         graph = defaultdict(list)
         for course, prereq in prerequisites:
             graph[course].append(prereq)
-
+        
         memo = {}
         seen = set()
         def cantake(num):
@@ -32,4 +32,3 @@ class Solution(object):
             if not cantake(i):
                 return False
         return True
-            

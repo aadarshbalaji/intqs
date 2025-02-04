@@ -17,7 +17,4 @@ class Solution(object):
             return currmax
         
         allexplorations = [max(explore(k,k+1), explore(k,k), key=len) for k in range(len(s)-1)]
-        if len(allexplorations) > 0:
-            return max(allexplorations, key=len)
-        else:
-            return ""
+        return max(allexplorations, key=len)

@@ -16,5 +16,6 @@ class Solution(object):
                 r += 1
                 curr = s[l+1:r]
             return curr
-        allperms = [max(explore(k, k), explore(k, k+1), key=len) for k in range(len(s) -1)]
-        return max(allperms, key = len)
+        
+        allperms = [max(explore(k,k), explore(k, k+1), key=len) for k in range(len(s)-1)]
+        return max(allperms, key=len)

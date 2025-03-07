@@ -1,22 +1,21 @@
-class Solution:
-    def setZeroes(self, matrix: List[List[int]]) -> None:
+class Solution(object):
+    def setZeroes(self, matrix):
         """
-        Do not return anything, modify matrix in-place instead.
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
         """
+        zero_rows = set()
+        zero_cols = set()
         lenrows = len(matrix)
         lencols = len(matrix[0])
-        cols = []
-        rows = []
-        for r in range(lenrows):
-            for c in range(lencols):
-                if matrix[r][c] == 0:
-                    rows.append(r)
-                    cols.append(c)
-        for row in rows:
-            matrix[row] = [0] * lencols
-        for col in cols:
-            for roow in range(lenrows):
-                matrix[roow][col] = 0
         
-
+        for row in range(lenrows):
+            for col in range(lencols):
+                if matrix[row][col] == 0:
+                    zero_rows.add(row)
+                    zero_cols.add(col)
         
+        for row in range(lenrows):
+            for col in range(lencols):
+                if row in zero_rows or col in zero_cols:
+                    matrix[row][col] = 0

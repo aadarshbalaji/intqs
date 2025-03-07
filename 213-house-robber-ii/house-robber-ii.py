@@ -8,7 +8,6 @@ class Solution(object):
             return max(nums)
         def helper(arr):
             dp = [0 for i in range(len(arr))]
-            random = dp * len(arr)
             if len(arr) < 3:
                 return max(arr)
             dp[0] = arr[0]

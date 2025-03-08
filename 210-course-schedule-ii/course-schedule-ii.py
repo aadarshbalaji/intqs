@@ -8,32 +8,29 @@ class Solution(object):
         graph = defaultdict(list)
         for course, prereq in prerequisites:
             graph[course].append(prereq)
-
+        path = []
         memo = {}
-        ans = []
         def cantake(course, visited):
             if course in memo:
                 return memo[course]
-            
             if course in visited:
-                memo[course] = False
                 return False
-            
             if not graph[course]:
-                ans.append(course)
+                path.append(course)
                 memo[course] = True
                 return True
-            
             visited.add(course)
-            for test in graph[course]:
-                if not cantake(test,  visited):
+            for nxt in graph[course]:
+                if not cantake(nxt, visited):
                     return False
             visited.remove(course)
+            path.append(course)
             memo[course] = True
-            ans.append(course)
             return True
-        
+            
+
         for i in range(numCourses):
-            if not cantake(i,set()):
+            if not cantake(i, set()):
                 return []
-        return ans
+        return path
+            

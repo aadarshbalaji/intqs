@@ -18,10 +18,11 @@ class Solution:
             
             #visited.remove((row, col)) 
             return fish_count
-
+        visited = set()
         for r in range(lenrows):
             for c in range(lencols):
-                if grid[r][c] > 0:  # Only start DFS if it's a water cell
-                    currmax = max(currmax, explore(r, c, set()))
+                if grid[r][c] > 0 and (r,c) not in visited:  # Only start DFS if it's a water cell
+                    currmax = max(currmax, explore(r, c, visited))
+                visited.add((r,c))
 
         return currmax

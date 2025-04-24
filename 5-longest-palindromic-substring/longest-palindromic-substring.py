@@ -4,18 +4,18 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        if len(s) < 2:
-            return s
-        
-        def explore(i, j):
-            l = i
-            r = j
-            curr = ''
-            while l >= 0 and r < len(s) and s[r] == s[l]:
-                l -= 1
-                r += 1
-                curr = s[l+1:r]
-            return curr
-        
-        allperms = [max(explore(k,k), explore(k, k+1), key=len) for k in range(len(s)-1)]
-        return max(allperms, key=len)
+        """
+        find middle index, go outwards
+        """
+        def expand(i, j):
+            state = s[i:j]
+            while i >= 0 and j < len(s) and s[i] == s[j]:
+                state = s[i:j+1]
+                i -= 1
+                j += 1
+            return state
+        currmax = ""
+        for i in range(len(s)):
+            currmax = max(currmax, expand(i,i), expand(i,i+1), key=len)
+        return currmax
+

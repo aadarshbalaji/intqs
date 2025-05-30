@@ -5,20 +5,11 @@ class Solution:
         """
         n = len(matrix)
         top = 0
-        bottom = n - 1
+        bottom = n-1
         while top < bottom:
-            for c in range(n):
-                temp = matrix[top][c]
-                matrix[top][c] = matrix[bottom][c]
-                matrix[bottom][c] = temp
+            matrix[top], matrix[bottom] = matrix[bottom], matrix[top]
             top += 1
             bottom -= 1
-        
-
-        for row in range(n):
-            for col in range(row+1, n):
-                temp = matrix[row][col]
-                matrix[row][col] = matrix[col][row]
-                matrix[col][row] = temp
-        
-        
+        for i in range(n):
+            for j in range(i + 1, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]

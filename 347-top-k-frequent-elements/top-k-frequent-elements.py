@@ -6,15 +6,17 @@ class Solution(object):
         :rtype: List[int]
         """
         rv = []
-        h = []
+        buckets = [[] for i in range(len(nums) +  1)]
         freq = Counter(nums)
         for num, count in freq.items():
-            heappush(h, [-count, num])
+            buckets[count].append(num)
         
-        for i in range(k):
-            if h:
-                rv.append(heappop(h)[1])
+        for bucket in buckets[::-1]:
+            if k - len(rv) >= len(bucket):
+                rv.extend(bucket)
         return rv
 
+
+        
 
 

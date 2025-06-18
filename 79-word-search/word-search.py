@@ -1,28 +1,24 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         
-        directions = [[0,1], [0,-1], [1,0], [-1,0]]
-        lenrows = len(board)
-        lencols = len(board[0])
-
-        def search(index, r, c, visited):
-            #print(index, r, c, visited)
-            if word[index] != board[r][c]:
-                return False
-            if index == len(word) -1:
+        def search(index, x, y, visited):
+            #print(index, x, y, visited)
+            if index >= len(word):
                 return True
-            visited.add((r,c))
-            for dr, dc in directions:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < lenrows and 0 <= nc < lencols and (nr, nc) not in visited and word[index+1] == board[nr][nc]:
-                    if search(index + 1, nr, nc, visited):
-                        return True
-                    visited.remove((nr,nc))
+            #print(word[index], x, y, visited)
+            if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]) or board[x][y] != word[index] or (x, y) in visited:
+                return False
+            directions = [[0,1], [1,0], [0,-1], [-1,0]]
+            visited.add((x, y))
+            for dx, dy in directions:
+                if search(index+1, x+dx, y+dy, visited):
+                    return True
+            visited.remove((x,y))
             return False
-
-        for row in range(lenrows):
-            for col in range(lencols):
-                if board[row][col] == word[0]:
-                    if search(0, row, col, set()):
+        
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == word[0]:
+                    if search(0, i,j, set()):
                         return True
         return False

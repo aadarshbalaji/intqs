@@ -8,6 +8,8 @@ class Solution(object):
             while i >= 0 and j < len(s) and s[i] == s[j]:
                 i -= 1
                 j += 1
-            return s[i+1: j]
+            return s[i+1:j]
+
         
-        return max([max(explore(i,i), explore(i,i+1), key=len) for i in range(len(s))], key=len)
+        rvlist = [max(explore(x,x+1), explore(x,x), key=len) for x in range(len(s))]
+        return max(rvlist, key=len)

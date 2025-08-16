@@ -1,8 +1,10 @@
 class Twitter(object):
 
     def __init__(self):
-        self.people = defaultdict(set) #id to set of following
-        self.tweets = [] #list of tweets
+        self.time = 0
+        self.following = defaultdict(set) # x: [y,z], x is following y and z
+        self.tweets = defaultdict(list)
+
 
     def postTweet(self, userId, tweetId):
         """
@@ -10,8 +12,9 @@ class Twitter(object):
         :type tweetId: int
         :rtype: None
         """
-        self.people[userId].add(userId)
-        self.tweets.append([userId,tweetId])
+        self.time += 1
+        self.tweets[userId].append([self.time, tweetId])
+        
         
 
     def getNewsFeed(self, userId):
@@ -19,14 +22,17 @@ class Twitter(object):
         :type userId: int
         :rtype: List[int]
         """
-        arr = []
-        for i in range(len(self.tweets)-1,-1,-1):
-            if len(arr) >= 10:
-                return arr
-            user, tweet = self.tweets[i]
-            if user in self.people[userId]:
-                arr.append(tweet)
-        return arr
+        heap = []
+        target_tweeters = list(self.following[userId]) + [userId]
+
+        for user in target_tweeters:
+            for timestamp, tweet in self.tweets[user][-10:]:
+                heappush(heap, [-timestamp, tweet])
+        
+        rv = []
+        while heap and len(rv) < 10:
+            rv.append(heappop(heap)[1])
+        return rv
         
 
     def follow(self, followerId, followeeId):
@@ -35,8 +41,9 @@ class Twitter(object):
         :type followeeId: int
         :rtype: None
         """
-        self.people[followerId].add(followerId)
-        self.people[followerId].add(followeeId)
+        if followerId != followeeId:
+            self.following[followerId].add(followeeId)
+        
 
     def unfollow(self, followerId, followeeId):
         """
@@ -44,8 +51,8 @@ class Twitter(object):
         :type followeeId: int
         :rtype: None
         """
-        if followeeId in self.people[followerId]:
-            self.people[followerId].remove(followeeId)
+        if followeeId in self.following[followerId]:
+            self.following[followerId].remove(followeeId)
         
 
 

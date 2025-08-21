@@ -14,21 +14,20 @@ class Solution(object):
         :type root: Node
         :rtype: Node
         """
-        if not root:
-            return root
         q = deque()
         q.append(root)
+        if not root:
+            return
         while q:
-            curr =[]
+            currlevel = []
             for i in range(len(q)):
                 node = q.popleft()
-                curr.append(node)
+                currlevel.append(node)
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-            curr.append(None)
-            for i in range(len(curr)-1):
-                curr[i].next = curr[i+1]
+            for i, node in enumerate(currlevel):
+                if i + 1 < len(currlevel):
+                    node.next = currlevel[i+1]
         return root
-                

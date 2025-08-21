@@ -5,18 +5,13 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
+        arr = [[] for i in range(len(nums)+1)]
+        counter = Counter(nums)
+        for val, freq in counter.items():
+            arr[freq].append(val)
+        
         rv = []
-        buckets = [[] for i in range(len(nums) +  1)]
-        freq = Counter(nums)
-        for num, count in freq.items():
-            buckets[count].append(num)
-        
-        for bucket in buckets[::-1]:
-            if k - len(rv) >= len(bucket):
-                rv.extend(bucket)
+        for values in arr[::-1]:
+            if len(rv) < k:
+                rv.extend(values)
         return rv
-
-
-        
-
-

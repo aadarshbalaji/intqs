@@ -9,14 +9,13 @@ class HitCounter(object):
         :rtype: None
         """
         self.deq.append(timestamp)
-        
 
     def getHits(self, timestamp):
         """
         :type timestamp: int
         :rtype: int
         """
-        while self.deq and self.deq[0] <= max(0, timestamp - 300):
+        while self.deq and self.deq[0] <= (timestamp - 300):
             self.deq.popleft()
         return len(self.deq)
 

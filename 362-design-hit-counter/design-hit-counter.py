@@ -2,29 +2,24 @@ class HitCounter(object):
 
     def __init__(self):
         self.deq = deque()
-        self.hits = 0
 
     def hit(self, timestamp):
         """
         :type timestamp: int
         :rtype: None
         """
-        #(timestamp, number of hits)
-        if self.deq and self.deq[-1][1] == timestamp:
-            self.deq[-1][1] += 1
-        else:
-            self.deq.append([timestamp, 1])
-        self.hits += 1
+        self.deq.append(timestamp)
+        
 
     def getHits(self, timestamp):
         """
         :type timestamp: int
         :rtype: int
         """
-        while self.deq and self.deq[0][0] <= (timestamp - 300):
-            initial = self.deq.popleft()
-            self.hits -= initial[1]
-        return self.hits
+        while self.deq and self.deq[0] <= (timestamp - 300):
+            self.deq.popleft()
+        return len(self.deq)
+        
 
 
 # Your HitCounter object will be instantiated and called as such:

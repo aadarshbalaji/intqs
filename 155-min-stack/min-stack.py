@@ -14,7 +14,7 @@ class MinStack(object):
             return
         
         current_min = self.stack[-1][1]
-        self.stack.append((val, min(val, current_min)))
+        self.stack.append((val,  min(val, current_min)))
         
 
     def pop(self):

@@ -32,7 +32,7 @@ class Solution(object):
                     
         tostart = explore(root, [], startValue)
         toend = explore(root, [], destValue)
-        print(tostart, toend)
+        #print(tostart, toend)
         
         i = 0
         while i < len(tostart) and i < len(toend) and tostart[i] == toend[i]:

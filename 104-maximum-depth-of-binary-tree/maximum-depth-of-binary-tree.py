@@ -10,6 +10,16 @@ class Solution(object):
         :type root: Optional[TreeNode]
         :rtype: int
         """
-        if not root:
-            return 0
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+        currmax = [0]
+        def getdepth(node, currdepth):
+            if not node:
+                currmax[0] = max(currmax[0], currdepth)
+                return
+            getdepth(node.left, currdepth + 1)
+            getdepth(node.right, currdepth + 1)
+        
+        getdepth(root, 0)
+        return currmax[0]
+
+
+        

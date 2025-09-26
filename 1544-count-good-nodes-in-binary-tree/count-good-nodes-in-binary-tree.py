@@ -1,24 +1,20 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
-    def goodNodes(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        rv = []
-        def search(node, currmax):
+class Solution:
+    def goodNodes(self, root: TreeNode) -> int:
+        rv = [0]
+        def traverse(node, max_of_path):
             if not node:
                 return
-            tempcurrmax = currmax
-            if node.val >= currmax:
-                rv.append(1)
-                tempcurrmax = node.val
-            search(node.left, tempcurrmax)
-            search(node.right, tempcurrmax)
-        search(root, -float('inf'))
-        return len(rv)
+            if node.val >= max_of_path:
+                rv[0] += 1
+            if node.left:
+                traverse(node.left, max(max_of_path, node.val))
+            if node.right:
+                traverse(node.right, max(max_of_path, node.val))
+        traverse(root, -float('inf'))
+        return rv[0]

@@ -8,33 +8,28 @@ class Node:
 
 from typing import Optional
 class Solution:
-    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        
+        hs = {} #mapping node.val of original graph to new node
+        node_set = set()
+        dih = defaultdict(list)
+        def explore(node):
+            if not node or node.val in node_set:
+                return 
+            node_set.add(node.val)
+            hs[node.val] = Node(node.val)
+            for neigh in node.neighbors:
+                dih[node.val].append(neigh.val)
+                if neigh.val not in node_set:
+                    explore(neigh)
+        explore(node)
+        
+        for i in node_set:
+            for nint in dih[i]:
+                hs[i].neighbors.append(hs[nint])
+        
+        return hs[node_set.pop()] if node_set else None
 
-        if not node:
-            return node
 
-        # Dictionary to save the visited node and it's respective clone
-        # as key and value respectively. This helps to avoid cycles.
-        visited = {}
 
-        # Put the first node in the queue
-        queue = deque([node])
-        # Clone the node and put it in the visited dictionary.
-        visited[node] = Node(node.val, [])
-
-        # Start BFS traversal
-        while queue:
-            # Pop a node say "n" from the from the front of the queue.
-            n = queue.popleft()
-            # Iterate through all the neighbors of the node
-            for neighbor in n.neighbors:
-                if neighbor not in visited:
-                    # Clone the neighbor and put in the visited, if not present already
-                    visited[neighbor] = Node(neighbor.val, [])
-                    # Add the newly encountered node to the queue.
-                    queue.append(neighbor)
-                # Add the clone of the neighbor to the neighbors of the clone node "n".
-                visited[n].neighbors.append(visited[neighbor])
-
-        # Return the clone of the node from visited.
-        return visited[node]
+        

@@ -16,13 +16,10 @@ class Solution:
                 arr.append(course)
                 memo[course] = True
                 return True
-            curr = True
             visited.add(course)
             for pre in graph[course]:
                 if not cantake(pre, visited):
                     return False
-                else:
-                    memo[pre] = True
             visited.remove(course)
             arr.append(course)
             memo[course] = True

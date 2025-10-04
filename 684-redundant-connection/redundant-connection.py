@@ -5,6 +5,7 @@ class DSU:
     def find(self, x):
         while self.father[x] != -1:
             x = self.father[x]
+        #self.father[x] = y
         return x
     
     def union(self, x, y):

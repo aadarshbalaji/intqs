@@ -1,42 +1,49 @@
-class Solution(object):
-    def pacificAtlantic(self, heights):
-        """
-        :type heights: List[List[int]]
-        :rtype: List[List[int]]
-        """
-        n = len(heights)
-        m = len(heights[0])
-        atlantic = set()
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
         pacific = set()
-        aq = deque()
-        pq = deque()
-        directions = [[0,1], [0,-1], [1,0], [-1,0]]
-        for x in range(n):
-            pacific.add((x,0))
-            pq.append((x,0))
-            atlantic.add((x,m-1))
-            aq.append((x,m-1))
-        for col in range(m):
-            pacific.add((0, col))
-            pq.append((0,col))
-            atlantic.add((n-1, col))
-            aq.append((n-1,col))
-        while aq:
-            r, c = aq.popleft()
+        atlantic = set()
+
+        #find all pacific
+        #find all atlantic
+        #go upwards from pacific and atlantic and and then get union of this set
+        for i in range(len(heights[0])):
+            pacific.add((0,i))
+            atlantic.add((len(heights)-1, i))
+
+        for j in range(len(heights)):
+            pacific.add((j,0))
+            atlantic.add((j, len(heights[0]) -1))
+
+        directions = [[0,1],[0,-1],[-1,0],[1,0]]
+        q = deque(pacific)
+        while q:
+            row, col = q.popleft()
+            val = heights[row][col]
+
             for dr, dc in directions:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < n and 0 <= nc < m and heights[nr][nc] >= heights[r][c] and (nr, nc) not in atlantic:
-                    aq.append((nr,nc))
-                    atlantic.add((nr,nc))
-    
-        while pq:
-            r, c = pq.popleft()
-            for dr, dc in directions:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < n and 0 <= nc < m and heights[nr][nc] >= heights[r][c] and (nr, nc) not in pacific:
-                    pq.append((nr,nc))
+                nr, nc = row + dr, col + dc
+
+                if 0 <= nr < len(heights) and 0 <= nc < len(heights[0]) and heights[nr][nc] >= val and (nr,nc) not in pacific:
                     pacific.add((nr,nc))
+                    q.append((nr,nc))
+
         
-        return list(set.intersection(pacific, atlantic))
+
+        d = deque(atlantic)
+        while d:
+            row, col = d.popleft()
+            val = heights[row][col]
+
+            for dr, dc in directions:
+                nr, nc = row + dr, col + dc
+
+                if 0 <= nr < len(heights) and 0 <= nc < len(heights[0]) and heights[nr][nc] >= val and (nr,nc) not in atlantic:
+                    atlantic.add((nr,nc))
+                    d.append((nr,nc))
+
         
+        return list(pacific & atlantic)
         
+
+
+            

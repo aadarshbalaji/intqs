@@ -17,15 +17,15 @@ class Solution:
         q.append(root)
 
         while q:
-            currlevel = []
+            prev = None
             for i in range(len(q)):
                 node = q.popleft()
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-                currlevel.append(node)
-            for i in range(len(currlevel)-1):
-                currlevel[i].next = currlevel[i+1]
-        
+                if prev:
+                    prev.next = node
+                prev = node
+
         return root

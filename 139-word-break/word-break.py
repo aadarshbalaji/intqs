@@ -1,19 +1,16 @@
-class Solution(object):
-    def wordBreak(self, s, wordDict):
-        """
-        :type s: str
-        :type wordDict: List[str]
-        :rtype: bool
-        """
-        dp = [False] * (len(s))
-        for i in range(len(s)):
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False for i in range(len(s) +1)]
+        dp[0] = True
+
+        word_dict_set = set(wordDict)
+        for i in range(len(dp)):
             for word in wordDict:
-                if i < len(word) - 1:
-                    continue
-                if i == len(word) - 1 or dp[i-len(word)] == True:
-                    if s[i-len(word)+1:i+1] == word:
-                        dp[i] = True
-                        break
+                n = len(word)
+                if i-n >= 0 and dp[i-n] and s[i-n:i] == word:
+                    dp[i] = True
+                    break
+
         print(dp)
         return dp[-1]
-            
+

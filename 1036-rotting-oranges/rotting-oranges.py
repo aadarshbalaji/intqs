@@ -1,35 +1,33 @@
-class Solution(object):
-    def orangesRotting(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
-        q = collections.deque()
-        mins = 0
-        numoranges = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j] == 2:
-                    q.append((i,j))
-                if grid[i][j] == 1:
-                    numoranges += 1
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        time = 0
+        num_rows = len(grid)
+        num_cols = len(grid[0])
+        numfresh = 0
         
-        directions = [[0,1],[1,0],[-1,0],[0,-1]]
+        q = deque()
+        for row in range(num_rows):
+            for col in range(num_cols):
+                if grid[row][col] == 1:
+                    numfresh += 1
+                if grid[row][col] == 2:
+                    q.append((row,col))
+        
+        dirs = [[0,1],[0,-1],[1,0],[-1,0]]
         while q:
-            
-            if numoranges <= 0:
-                break
+            if numfresh == 0:
+                return time
+            time += 1
             for i in range(len(q)):
-                row, col = q.popleft()
-                for dr, dc in directions:
-                    nr, nc = row + dr, col + dc
-                    if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]) and grid[nr][nc] == 1:
+                currow, curcol = q.popleft()
+
+                for r, c in dirs:
+                    nr, nc = currow + r, curcol + c
+                    if (0 <= nr < num_rows) and (0 <= nc < num_cols) and grid[nr][nc] == 1:
+                        numfresh -= 1
+                        grid[nr][nc] = 2
                         q.append((nr,nc))
-                        numoranges -= 1
-                        grid[nr][nc] = 4
-            mins += 1
-            #print(grid)
-        if numoranges == 0:
-            return mins
-        else:
-            return -1
+        
+        return time if numfresh == 0 else -1
+
+

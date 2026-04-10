@@ -1,11 +1,12 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        hs = {'}':'{', ')': '(', ']':'['}
+        matching = {')': '(', '}': '{', ']': '['}
         stack = []
         for c in s:
-            if c in hs:
-                if not stack or hs[c] != stack.pop():
-                    return False
-            else:
+            if c not in matching.keys(): #opening
                 stack.append(c)
-        return len(stack) == 0
+            else:
+                if not stack or matching[c] != stack.pop():
+                    return False
+        return True if len(stack) == 0 else False
+        

@@ -27,13 +27,11 @@ class Solution(object):
             if (target < startingmid):
                 rrow = midrow - 1
             elif (target >= startingmid and target <= matrix[midrow][-1]):
-                break
+                return helper(midrow)
             else:
                 lrow = midrow + 1
 
-        if (midrow == -1):
-            return False
-        return helper(midrow)
+        return False
 
 
         

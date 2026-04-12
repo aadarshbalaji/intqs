@@ -5,22 +5,35 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        copy = matrix
-        while copy:
-            middle = len(copy) // 2
-            if copy[middle][0] > target:
-                copy = copy[0:middle]
-            elif copy[middle][-1] < target:
-                copy = copy[middle + 1:]
+        def helper(row):
+            l = 0
+            r = len(matrix[0]) - 1
+            while l <= r:
+                mid = (l + r) // 2
+                if matrix[row][mid] == target:
+                    return True
+                elif target < matrix[row][mid]:
+                    r = mid -1
+                elif target > matrix[row][mid]:
+                    l = mid + 1
+            return False
+        
+        lrow = 0
+        rrow = len(matrix) - 1
+        midrow = -1
+        while lrow <= rrow:
+            midrow = (lrow + rrow) // 2
+            startingmid = matrix[midrow][0]
+            if (target < startingmid):
+                rrow = midrow - 1
+            elif (target >= startingmid and target <= matrix[midrow][-1]):
+                break
             else:
-                cc = copy[middle]
-                while cc:
-                    cmid = len(cc)//2
-                    if cc[cmid] == target:
-                        return True
-                    elif cc[cmid] < target:
-                        cc = cc[cmid+1:]
-                    else:
-                        cc = cc[0:cmid]
-                return False
-            
+                lrow = midrow + 1
+
+        if (midrow == -1):
+            return False
+        return helper(midrow)
+
+
+        

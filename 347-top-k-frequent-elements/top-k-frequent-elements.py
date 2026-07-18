@@ -5,13 +5,11 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        arr = [[] for i in range(len(nums)+1)]
-        counter = Counter(nums)
-        for val, freq in counter.items():
-            arr[freq].append(val)
-        
-        rv = []
-        for values in arr[::-1]:
-            if len(rv) < k:
-                rv.extend(values)
-        return rv
+        freq = Counter(nums)
+        heap = []
+        for num, frequency in freq.items():
+            heapq.heappush(heap, (-frequency, num))
+        res = []
+        for i in range(k):
+            res.append(heappop(heap)[1])
+        return res

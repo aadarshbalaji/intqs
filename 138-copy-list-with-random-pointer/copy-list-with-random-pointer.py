@@ -9,26 +9,19 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        deep = Node(-10000)
-        start = deep
-        rv = deep
-        mapoldtonew = {}
-        copy = head
-        while copy:
-            node = Node(copy.val)
-            mapoldtonew[copy] = node
-            deep.next = node
-            deep = deep.next
-            if copy.random:
-                node.random = copy.random
-            else:
-                node.random = None
-            copy = copy.next
-        while start:
-            if start.random:
-                start.random = mapoldtonew[start.random]
-            else:
-                start.random = None
-            start = start.next
-
-        return rv.next
+        if not head:
+            return 
+        real_to_dup = {}
+        real_to_dup[None] = None
+        temp_head = head
+        another_head = head
+        while head:
+            head_copy = Node(head.val)
+            real_to_dup[head] = head_copy
+            head = head.next
+        while temp_head:
+            real_to_dup[temp_head].next = real_to_dup[temp_head.next]
+            real_to_dup[temp_head].random = real_to_dup[temp_head.random]
+            temp_head = temp_head.next
+        return real_to_dup[another_head]
+            
